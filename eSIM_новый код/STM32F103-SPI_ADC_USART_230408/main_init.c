@@ -32,7 +32,7 @@ GPIOC->CRH |= GPIO_CRH_MODE13;
 GPIOC->CRH &= ~GPIO_CRH_CNF13;
 
 //====================== USART1 ====================== 
-	
+	//общение с модулем связи 
 	// Включаем тактирование порта GPIOA и блока альтернативных функций
 	RCC->APB2ENR |= (RCC_APB2ENR_IOPAEN | RCC_APB2ENR_AFIOEN); 
 	RCC->APB2ENR |= RCC_APB2ENR_USART1EN; // Включаем тактирование USART1
@@ -49,7 +49,8 @@ GPIOC->CRH &= ~GPIO_CRH_CNF13;
 	// Разрешаем прерывания UART1 в контроллере прерываний
 	NVIC_EnableIRQ(USART1_IRQn);
 	
-	
+//====================== USART2 ====================== 
+	// Внешний порт (получает\отдаёт инструкции с\на устройво
 	// Включаем тактирование порта GPIOA и блока альтернативных функций
 	RCC->APB1ENR |= RCC_APB1ENR_USART2EN; // Включаем тактирование USART2
 	// PA2 (TX1) AFIO Push-Pull, 10MHz. PA3 (RX1) HiZ, 10MHz
