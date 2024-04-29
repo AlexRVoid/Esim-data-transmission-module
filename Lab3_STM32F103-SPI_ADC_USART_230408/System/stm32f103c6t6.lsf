@@ -1,0 +1,77 @@
+/*
+Флэш с адреса 0x08000000: таблица векторов прерываний + программный код +
+константы + данные для инициализации + свободно
+
+ОЗУ 0x20000000: переменные + переменные = 0 + свободно + стек
+
+В первую очередь можно изменять 13, 14 и 65 строчки.
+*/
+
+MEMORY
+{
+  /* r - чтение, w - запись, x - выполнение */
+  flash	(rx)	: ORIGIN = 0x08000000, LENGTH = 32K /* Kбайт */
+  ram	(xrw)	: ORIGIN = 0x20000000, LENGTH = 10K
+}
+
+SECTIONS
+{
+/* Объявляем расположение в flash */
+	.text :
+	{
+	  . = ALIGN(4); /* "." - текущий адреc + выравнивать адреса по 4 байта */
+	  KEEP(*(.interrupt_vector)) /* пока пропускаем таблицу прерываний */
+	  *(.text) /* программный код */
+	  *(.text*)
+	  *(.rodata) /* константы read-only-data */
+	  *(.rodata*)
+	
+	  *(.glue_7)
+	  *(.glue_7t)
+	  *(.eh_frame)
+	  KEEP (*(.init))
+	  KEEP (*(.fini))
+	  . = ALIGN(4);
+	} > flash
+
+/* Обявляем расположение в ОЗУ */
+	_data_flash = .; /* запоминаем адреса */
+	.data : AT (_data_flash)
+	{
+	  . = ALIGN(4);
+	  _data_begin = .;
+	  *(.data)
+	  *(.data*)
+	  . = ALIGN(4);
+	  _data_end = .;
+	} > ram
+
+/* Переменные, значение которых будет = 0 */
+	.bss :
+	{
+	  . = ALIGN(4);
+	  _bss_begin = .;
+	  _bss_start__ = _bss_begin;
+	  *(.bss)
+	  *(.bss*)
+	  *(COMMON)
+	  . = ALIGN(4);
+	  _bss_end = .;
+	  __bss_end__ = _bss_end;
+	} > ram
+
+/* Стек */
+	_stack_size = 200;
+	_stack_end = 0x20000000 + 10K; 
+	_stack_begin = _stack_end - _stack_size;
+	
+	. = _stack_begin;
+	._stack :
+	{
+	  . = . + _stack_size;
+  	} > ram
+}
+
+ENTRY(handler_reset) /* адрес начала выполнения программы */
+
+/* КОНЕЦ */
