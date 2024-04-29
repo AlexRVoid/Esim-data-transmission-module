@@ -22,12 +22,19 @@ USART1: PA9 = TX1, PA10 = RX1
 #include "main_init.c"
 
 // ================== Описание глобальных переменных =============
-#define BUFFER_SIZE 255
+#define BUFFER_SIZE_COMMAND 500
+#define BUFFER_SIZE_RESPONSE 2000
+
 volatile uint16_t Timer = 0;
-volatile uint8_t mass[6], commandIndex = 0, i = 0;
-volatile uint8_t x = 0, y = 0, a = 0;
+volatile uint8_t mass[6], i = 0;
+volatile uint8_t x = 0, y = 0, a = 0, b = 0, sendDelay = 0;
 volatile uint8_t ifrx = 0;
-volatile uint8_t commandBuffer[BUFFER_SIZE], lineAccepted = 0;
+volatile uint8_t commandBuffer[BUFFER_SIZE_COMMAND], responseBuffer[BUFFER_SIZE_RESPONSE];
+volatile uint8_t commandIndex = 0, responseIndex = 0;
+//volatile uint8_t testCommand[2] = {'A', 'T'};
+
+
+
 
 
 
@@ -36,43 +43,60 @@ volatile uint8_t commandBuffer[BUFFER_SIZE], lineAccepted = 0;
 // USART1->SR, бит RXNE сбрасывается автоматически при чтении USART1->DR,
 // записывать в него ноль нужно только при мультибуферной коммуниуации.
 
-void Send_command(){
+void Send_command_from_simcom_to_uart(volatile uint8_t command[], uint8_t commandSize){
 	while ((USART2->SR & USART_SR_TXE) == 0) {};
-	for (i = 0; i <= commandIndex; i++){
-		USART1->DR = commandBuffer[i];
+	for (i = 0; i < commandSize; i++){
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+		USART2->DR = command[i];
+	}
+	responseIndex = 0;
+	a = 0;
+}
+void Send_command_from_uart_to_simcom(volatile uint8_t command[], uint8_t commandSize){
+	while ((USART1->SR & USART_SR_TXE) == 0) {};
+	for (i = 0; i < commandSize; i++){
+		while ((USART1->SR & USART_SR_TXE) == 0) {};
+		USART1->DR = command[i];
 	}
 	commandIndex = 0;
-	a = 0;
-	
+	b = 0;
 }
 
 void USART1_IRQHandler() {
-	static u8 ch;
-	ch = USART1->DR; USART1->DR = ch;
-	commandBuffer[commandIndex] = ch; // Добавляем символ в массив команды
+	
+	static u8 ch1;
+	ch1 = USART1->DR; 
+	//USART1->DR = ch;
+	responseBuffer[responseIndex++] = ch1; // Добавляем символ в массив команды
 	//USART1->DR = commandIndex;
-	commandIndex++;
+	//commandIndex++;
+	sendDelay = 6;
+	a = 1;
+	/*
 	if (ch  == '!'){
 		a = 1;
-		USART1->DR = 'i';
-		//Send_command(commandIndex);
-		//a = 1;
 	}
-	
-	
-	//USART2->DR = USART1->DR;
-	//USART2->DR = ch;
-	
-}  
-
+	*/
+}
 
 
 void USART2_IRQHandler() {
-	//static u8 ch;
-	//ch = USART2->DR; 
-	//USART2->DR = ch + 1;
-	//USART1->DR = USART2->DR;
-	//USART1->DR = '!';
+	static u8 ch2;
+	ch2 = USART2->DR; 
+	//USART1->DR = ch;
+	commandBuffer[commandIndex++] = ch2; // Добавляем символ в массив команды
+	//USART1->DR = commandIndex;
+	//commandIndex++;
+	sendDelay = 4;
+	b = 1;
+	/*
+	if (ch  == '!'){
+		b = 1;
+		//USART1->DR = 'i';
+		//Send_command(commandIndex);
+		//a = 1;
+	}
+	*/
 }  
 // =================== TIM2 0.5 сек. ===================
 void TIM2_IRQHandler() {
@@ -80,6 +104,9 @@ void TIM2_IRQHandler() {
     TIM2->SR &= ~ TIM_SR_UIF; 
     Timer++; // Наш счётчик времени
     GPIOC->ODR ^= GPIO_ODR_ODR13; // Мигаем светодиодом PC8
+  }
+  if (sendDelay != 0){
+	  sendDelay--;
   }
 }  
 
@@ -91,9 +118,14 @@ main_init(); // Инициализация МК
 
 while (1) {
 	
-	if (a == 1){
-		Send_command();
+	if (a == 1 && sendDelay == 0){
+		Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
 	}
+	if (b == 1 && sendDelay == 0){
+		Send_command_from_uart_to_simcom(commandBuffer, commandIndex);
+	}
+	
+	
 	
 	// while (((USART1->SR & USART_SR_RXNE) != 0)){
 		// if (USART1->DR != '!') {
