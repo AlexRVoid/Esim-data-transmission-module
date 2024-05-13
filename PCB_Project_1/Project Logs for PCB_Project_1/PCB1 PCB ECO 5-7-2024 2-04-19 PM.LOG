@@ -1,0 +1,23 @@
+Added Component: Designator=R22(R0805)
+Add component (AddParameter): Name = "Value"; Value = "5.1k"; VariantName = "[No Variations]"
+Added Component: Designator=R23(R0805)
+Add component (AddParameter): Name = "Value"; Value = "5.1k"; VariantName = "[No Variations]"
+Added Component: Designator=USB-C1(USB C)
+Added Pin To Net: NetName=NetR22_0 Pin=R22-0
+Added Pin To Net: NetName=GND Pin=R22-1
+Added Pin To Net: NetName=NetR23_0 Pin=R23-0
+Added Pin To Net: NetName=GND Pin=R23-1
+Add Pin To Net: Unknown Pin: Pin STM1-41
+Added Pin To Net: NetName=GND Pin=USB-C1-1
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-2
+Added Pin To Net: NetName=NetR23_0 Pin=USB-C1-3
+Added Pin To Net: NetName=NetR22_0 Pin=USB-C1-4
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-5
+Added Pin To Net: NetName=GND Pin=USB-C1-6
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Member To Class: ClassName=eSIM Member=Component R22 Resistor
+Added Member To Class: ClassName=eSIM Member=Component R23 Resistor
+Added Member To Class: ClassName=eSIM Member=Component USB-C1 USB-C

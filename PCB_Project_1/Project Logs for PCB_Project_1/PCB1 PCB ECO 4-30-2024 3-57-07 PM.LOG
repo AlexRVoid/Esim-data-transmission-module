@@ -1,0 +1,36 @@
+Added Component: Designator=PDTD113ZT_1(PDTD113ZT)
+Added Component: Designator=PDTD113ZT_2(PDTD113ZT)
+Added Component: Designator=PDTD113ZT_3(PDTD113ZT)
+Added Component: Designator=R11(R0805)
+Add component (AddParameter): Name = "Value"; Value = "47k"; VariantName = "[No Variations]"
+Added Component: Designator=R12(R0805)
+Add component (AddParameter): Name = "Value"; Value = "47k"; VariantName = "[No Variations]"
+Added Net: Name=+3.3
+Added Pin To Net: NetName=GND Pin=PDTD113ZT_1-6
+Added Pin To Net: NetName=GND Pin=PDTD113ZT_2-6
+Added Pin To Net: NetName=GND Pin=PDTD113ZT_3-6
+Added Pin To Net: NetName=GND Pin=R11-1
+Added Pin To Net: NetName=GND Pin=R12-1
+Added Net: Name=GND
+Added Net: Name=Net*_26
+Added Pin To Net: NetName=Net*_27 Pin=PDTD113ZT_2-5
+Added Net: Name=Net*_27
+Added Net: Name=Net*_33
+Added Net: Name=Net*_38
+Added Net: Name=NetA7682E_J201_1
+Added Pin To Net: NetName=NetA7682E_J201_11 Pin=PDTD113ZT_3-5
+Added Net: Name=NetA7682E_J201_11
+Added Net: Name=NetA7682E_J201_39
+Added Net: Name=NetA7682E_J201_41
+Added Net: Name=NetGNL-0805EC_1
+Added Net: Name=NetLT1085_?
+Added Pin To Net: NetName=NetPDTD113ZT_1_4 Pin=PDTD113ZT_1-4
+Added Pin To Net: NetName=NetPDTD113ZT_1_4 Pin=R11-0
+Added Net: Name=NetPDTD113ZT_1_4
+Added Pin To Net: NetName=NetPDTD113ZT_1_5 Pin=PDTD113ZT_1-5
+Added Pin To Net: NetName=NetPDTD113ZT_1_5 Pin=PDTD113ZT_2-4
+Added Pin To Net: NetName=NetPDTD113ZT_1_5 Pin=R12-0
+Added Net: Name=NetPDTD113ZT_1_5
+Added Pin To Net: NetName=NetPDTD113ZT_3_4 Pin=PDTD113ZT_3-4
+Added Net: Name=NetPDTD113ZT_3_4
+Added Class: Name=Чертёж

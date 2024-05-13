@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=NetR13_1 Pin=STM1-32
+Added Pin To Net: NetName=NetR13_1 Pin=STM1-34
+Added Pin To Net: NetName=GND Pin=STM1-39
+Added Member To Class: ClassName=eSIM Member=Component A7682E_J204 A7682E
+Added Member To Class: ClassName=族痱告 Member=Component GNL-1 light diod
+Added Member To Class: ClassName=族痱告 Member=Component R6 Resistor
+Added Member To Class: ClassName=族痱告 Member=Component STM1 STM32F103C6T8

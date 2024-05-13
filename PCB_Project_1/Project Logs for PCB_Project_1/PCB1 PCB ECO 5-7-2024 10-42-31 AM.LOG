@@ -1,0 +1,17 @@
+Added Component: Designator=USB-C1(USB C)
+Add Pin To Net: Unknown Pin: Pin STM1-41
+Added Pin To Net: NetName=GND Pin=USB-C1-1
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-4
+Added Pin To Net: NetName=NetR23_0 Pin=USB-C1-5
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-9
+Added Pin To Net: NetName=GND Pin=USB-C1-12
+Added Pin To Net: NetName=GND Pin=USB-C1-13
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-16
+Added Pin To Net: NetName=NetR22_0 Pin=USB-C1-17
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-21
+Added Pin To Net: NetName=GND Pin=USB-C1-24
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Pin To Net: NetName=GND Pin=USB-C1-38
+Added Member To Class: ClassName=eSIM Member=Component USB-C1 USB-C

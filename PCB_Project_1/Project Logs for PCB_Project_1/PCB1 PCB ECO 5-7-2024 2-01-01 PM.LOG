@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=NetC8_2 Pin=USB-C1-9
+Removed Pin From Net: NetName=GND Pin=USB-C1-12
+Removed Pin From Net: NetName=GND Pin=USB-C1-13
+Removed Pin From Net: NetName=NetC8_2 Pin=USB-C1-16
+Removed Pin From Net: NetName=NetR22_0 Pin=USB-C1-17
+Removed Pin From Net: NetName=NetC8_2 Pin=USB-C1-21
+Removed Pin From Net: NetName=GND Pin=USB-C1-24
+Add Pin To Net: Unknown Pin: Pin STM1-41
+Added Pin To Net: NetName=NetC8_2 Pin=USB-C1-2
+Added Pin To Net: NetName=NetR22_0 Pin=USB-C1-4
+Added Pin To Net: NetName=GND Pin=USB-C1-6
+Added Member To Class: ClassName=eSIM Member=Component USB-C1 USB-C

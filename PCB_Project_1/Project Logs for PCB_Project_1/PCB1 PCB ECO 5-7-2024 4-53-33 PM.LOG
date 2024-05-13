@@ -1,0 +1,8 @@
+Added Component: Designator=LT1(LD1058-1)
+Added Pin To Net: NetName=NetLT1_Adj Pin=LT1-Adj
+Added Pin To Net: NetName=NetC8_2 Pin=LT1-Vin
+Added Pin To Net: NetName=NetA1_1 Pin=LT1-Vout
+Add Pin To Net: Unknown Pin: Pin STM1-41
+Added Member To Class: ClassName=eSIM Member=Component C8 capacitor
+Added Member To Class: ClassName=eSIM Member=Component eSIM1 eSIM
+Added Member To Class: ClassName=eSIM Member=Component LT1 LT1085

@@ -1,0 +1,11 @@
+Added Component: Designator=STM1(STM)
+Added Pin To Net: NetName=GND Pin=STM1-1
+Added Pin To Net: NetName=GND Pin=STM1-2
+Added Pin To Net: NetName=NetR5_1 Pin=STM1-26
+Added Pin To Net: NetName=NetPDTD113ZT_2_5 Pin=STM1-27
+Added Pin To Net: NetName=NetR11_1 Pin=STM1-33
+Added Pin To Net: NetName=NetR13_1 Pin=STM1-34
+Added Pin To Net: NetName=NetC8_2 Pin=STM1-38
+Added Pin To Net: NetName=GND Pin=STM1-39
+Added Pin To Net: NetName=NetR6_0 Pin=STM1-40
+Added Member To Class: ClassName=Чертёж Member=Component STM1 STM32F103C6T8
