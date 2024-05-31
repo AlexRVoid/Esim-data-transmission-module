@@ -40,6 +40,9 @@ volatile uint8_t SMSCommandReference[3] = {'S', 'M', 'S'};
 volatile uint8_t commandNum = 0;
 volatile uint8_t lastSMSIndex = 0;
 volatile uint8_t commandProcessing = 0;
+volatile uint8_t TCPConnectCommand[50] = {'A', 'T', '+' ,'C', 'I', 'P', 'O', 'P', 'E', 'N', '=', '1', ',', '\"', 'T', 'C', 'P', '\"', ',', '\"'};
+volatile uint8_t TCPCommandReference[3] = {'T', 'C', 'P'};
+volatile uint8_t sendTCPMessageCommand[13] = {'A', 'T', '+', 'C', 'I', 'P', 'S', 'E', 'N', 'D', '=', '1', 0x0D};
 
 
 
@@ -70,13 +73,11 @@ uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){
 		USART2->DR = 'E';return 0;
 	}
 	x = 0;
-	//USART2->DR = '1';
+	
 	while(x < responseIndex){
-		//while ((USART2->SR & USART_SR_TXE) == 0) {};
-		//USART2->DR = '2';
+		
 		while(responseBuffer[x] == 62){
-			//while ((USART2->SR & USART_SR_TXE) == 0) {};
-			//USART2->DR = '3';
+			
 			
 			Send_command_from_uart_to_simcom(message, messageLength);
 			delay_ms(5000);
@@ -84,20 +85,7 @@ uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){
 			while ((USART2->SR & USART_SR_TXE) == 0) {};
 			USART2->DR = 'S';
 			return 1;
-			/*
-			uint8_t SMSResponseIndex = 0;
-			while(responseBuffer[SMSResponseIndex] != '+'){
-				SMSResponseIndex++;
-			}
-			i = 0;
-			while((responseBuffer[SMSResponseIndex] == SMSReferenceResponse[i]) && (i < 6)){
-				SMSResponseIndex++;
-				i++;
-			}
-			if(i == 6){
-				USART2->DR = 'S';
-			}
-			*/
+			
 		}
 		x++;
 	}
@@ -109,23 +97,18 @@ uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){
 }
 void SMS_search(volatile uint8_t command[], volatile uint8_t commandSize){
 	commandProcessing = 1;
-	// while ((USART2->SR & USART_SR_TXE) == 0) {};
-	// USART2->DR = commandSize+48;
+	
 	for (i = 0; i < commandSize; i++){
-		//while ((USART2->SR & USART_SR_TXE) == 0) {};
-		//USART2->DR = '2';
+		
 		if(command[i] == '+'){
 			x = 0;
-			//while ((USART2->SR & USART_SR_TXE) == 0) {};
-			//USART2->DR = '3';
+			
 			while (command[i] == newSMSReferenceResponse[x]){
 				i++;
 				x++;
-				//while ((USART2->SR & USART_SR_TXE) == 0) {};
-				//USART2->DR = '4';
+				
 				if (x == 6) {
-					//while ((USART2->SR & USART_SR_TXE) == 0) {};
-					//USART2->DR = '5';
+					
 					while(command[i] != ','){
 						i++;
 					}
@@ -181,10 +164,109 @@ uint8_t Command_check(volatile uint8_t command[], volatile uint8_t commandSize){
 		}
 		
 	}
+	i = 0;
+	uint8_t TCPResponseIndex = 0;
+	while((command[i] == TCPCommandReference[i]) && (i < 3)){
+		TCPResponseIndex++;
+		i++;
+		if (i == 3){
+			commandNum = 2;
+		}
+	}
+	if (commandNum == 2){
+		
+		volatile uint8_t ip[15];
+		volatile uint8_t port[5];
+		//TCP,ip:217.71.129.139,p:4742,m:...
+		//максимальная длинна сообщения 150 символов, только латиница
+		uint8_t x = 0;
+		while(command[x] != 'i' && x < commandSize){
+			x++;
+		}
+		x++;
+		x++;
+		x++;
+		for(i = 0; command[x] != ','; i++, x++){
+			ip[i] = command[x];
+		}
+		while(command[x] != 'p' && x < commandSize){
+			x++;
+		}
+		x++;
+		x++;
+		for(i = 0; command[x] != ','; i++, x++){
+			port[i] = command[x];
+		}
+		while(command[x] != 'm' && x < commandSize){
+			x++;
+		}
+		x++;
+		x++;
+		volatile uint8_t SMSLength = commandSize - x;
+		if (SMSLength <= MAX_SMS_LENGTH){
+			for (i = 0; x < commandSize; i++, x++){
+				message[i] = command[x];
+			}
+			Send_TCP(ip,port, SMSLength);
+			return 1;
+		}
+		
+	}
 	return 0;
 }
 
-void TCP/IP_Connect(volatile uint8_t ip[], volatile uint8_t port[]){
+void TCP/IP_Connect(uint8_t ip[], uint8_t port[]){
+	a = 0;
+	uint8_t x = 20;
+	responseIndex = 0;
+	for(i = 0; ip != '\n' && i < 15; i++, x++){
+		TCPConnectCommand[x] = ip[i];
+	}
+	
+	TCPConnectCommand[x] = '\"';
+	x++;
+	TCPConnectCommand[x] = ',';
+	for(i = 0; port != '\n' && port < 5; i++, x++){
+		TCPConnectCommand[x] = port[i];
+	}
+	
+	TCPConnectCommand[x] = 0x0D;
+	responseIndex = 0;
+	Send_command_from_uart_to_simcom(TCPConnectCommand, x);
+}
+
+uint8_t Send_TCP(uint8_t ip, uint8_t port, volatile uint8_t SMSLength){
+	TCP/IP_Connect(ip, port);
+	Send_command_from_uart_to_simcom(sendTCPMessageCommand, 13);
+	a = 0;
+	responseIndex = 0;
+	sendTCPCommandResponseDelay = 10;
+	while((a == 0 && sendDelay != 0) || sendTCPCommandResponseDelay != 0){}
+	if (a == 0){
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+		USART2->DR = 'E';return 0;
+	}
+	x = 0;
+	//USART2->DR = '1';
+	while(x < responseIndex){
+		while(responseBuffer[x] == 62){
+			
+			Send_command_from_uart_to_simcom(message, messageLength);
+			delay_ms(5000);
+			USART1->DR = 0x1A;
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+			USART2->DR = 'S';
+			return 1;
+			
+		}
+		x++;
+	}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+	USART2->DR = 'E';
+	return 0;
+	
+	
 	
 }
 void Send_command_from_simcom_to_uart(volatile uint8_t command[], volatile uint8_t commandSize){
@@ -210,37 +292,24 @@ void USART1_IRQHandler() {
 	
 	static u8 ch1;
 	ch1 = USART1->DR; 
-	//USART1->DR = ch;
+	
 	responseBuffer[responseIndex++] = ch1; // Добавляем символ в массив команды
-	//USART1->DR = commandIndex;
-	//commandIndex++;
+	
 	sendDelay = 18;
 	a = 1;
-	/*
-	if (ch  == '!'){
-		a = 1;
-	}
-	*/
+	
 }
 
 
 void USART2_IRQHandler() {
 	static u8 ch2;
 	ch2 = USART2->DR; 
-	//USART1->DR = ch;
+	
 	commandBuffer[commandIndex++] = ch2; // Добавляем символ в массив команды
-	//USART1->DR = commandIndex;
-	//commandIndex++;
+	
 	sendDelay = 4;
 	b = 1;
-	/*
-	if (ch  == '!'){
-		b = 1;
-		//USART1->DR = 'i';
-		//Send_command(commandIndex);
-		//a = 1;
-	}
-	*/
+	
 }  
 
 

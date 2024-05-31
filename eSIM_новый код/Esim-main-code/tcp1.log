@@ -1,0 +1,315 @@
+Terminal log file
+Date: 15.05.2024 - 14:48:50
+-----------------------------------------------
+AT+NETOPEN
+
++IP ERROR: Network is already opened
+
+ERROR
+*NOTE-2024.05.15@14:49:03 - LogNote
+AT+CIPOPEN=1,"TCP","217.71.129.139",4722
+
+OK
+
++CIPOPEN: 1,1
+AT+CIPSEND=1,5
+
++CIPERROR: 4
+
+ERROR
+AT+CIPSEND=0,5
+
++CIPERROR: 4
+
+ERROR
+AT+CIPCLOSE
+
+ERROR
+AT+CIPCLOSE?
+
++CIPCLOSE: 0,0,0,0,0,0,0,0,0,0
+
+OK
+AT+CIPOPEN?
+
++CIPOPEN: 0
++CIPOPEN: 1
++CIPOPEN: 2
++CIPOPEN: 3
++CIPOPEN: 4
++CIPOPEN: 5
++CIPOPEN: 6
++CIPOPEN: 7
++CIPOPEN: 8
++CIPOPEN: 9
+
+OK
+AT+CIPOPEN=1,"TCP","217.71.129.139",4722
+
+OK
+
++CIPOPEN: 1,1
+AT+CIPOPEN?
+
++CIPOPEN: 0
++CIPOPEN: 1
++CIPOPEN: 2
++CIPOPEN: 3
++CIPOPEN: 4
++CIPOPEN: 5
++CIPOPEN: 6
++CIPOPEN: 7
++CIPOPEN: 8
++CIPOPEN: 9
+
+OK
+AT+ADRR
+
+ERROR
+AT+IPADRR
+
+ERROR
+AT+IPADDR
+
++IPADDR: 10.112.40.6
+
+OK
+AT+IPADDR
+
++IPADDR: 10.112.40.6
+
+OK
+<0>
+*ISIMAID: "A0000000871004FF49FF0589"
+
++CPIN: READY
+
+*ATREADY: 1
+
+SMS DONE
+
++CGEV: EPS PDN ACT 1
+
+PB DONE
+AT
+
+OK
+AT+NETOPEN
+
+OK
+
++NETOPEN: 0
+AT+IPADDR
+
++IPADDR: 10.112.139.121
+
+OK
+AT+CIPOPEN=1,"TCP",217.71.129.138",4721
+
+ERROR
+AT+CIPOPEN=1,"TCP",217.71.129.139",4721
+
+ERROR
+AT+CIPOPEN=1,"TCP",217.71.129.139",4722
+
+ERROR
+AT+CIPOPEN=?
+
++CIPOPEN: (0-9),("TCP","UDP")
+
+OK
+AT+CIPOPEN?
+
++CIPOPEN: 0
++CIPOPEN: 1
++CIPOPEN: 2
++CIPOPEN: 3
++CIPOPEN: 4
++CIPOPEN: 5
++CIPOPEN: 6
++CIPOPEN: 7
++CIPOPEN: 8
++CIPOPEN: 9
+
+OK
+AT+CIPOPEN=1,"TCP","217.71.129.139",4722
+
+OK
+
++CIPOPEN: 1,1
+AT+COPS
+
+ERROR
+AT+COPS?
+
++COPS: 0,2,"25002",7
+
+OK
+AT+CMEE?
+
++CMEE: 2
+
+OK
+AT+CPIN?
+
++CPIN: READY
+
+OK
+AT+CREG
+
+OK
+AT+CREG?
+
++CREG: 0,1
+
+OK
+AT+CREG?
+
++CREG: 0,1
+
+OK
+AT+netopen
+
++IP ERROR: Network is already opened
+
+ERROR
+AT+IPADDR
+
++IPADDR: 10.112.139.121
+
+OK
+AT+CIPOPEN=1,"TCP","postman-echo.com", 80
+
+OK
+
++CIPOPEN: 1,0
+
++IPCLOSE: 1,1
+AT+CIPOPEN=1,"TCP","postman-echo.com", 80
+
+OK
+
++CIPOPEN: 1,0
+AT+CIPSEN=1,40
+
+ERROR
+AT+CIPSEND=1,40
+
+>GET https://postman-echo.com/ip HTTP/1.0
+OK
+
++CIPSEND: 1,40,40
+
++IPCLOSE: 1,1
+AT+CIPSEND=1
+
++CIPERROR: 4
+
+ERROR
+AT+CIPOPEN=1,"TCP","postman-echo.com", 80
+
++CIPOPEN: 1,0
+
+OK
+AT+CIPSEND=1
+
+><cr><lf>GET https://postman-echo.com/ip HTTP/1.0<cr><lf>Host:www.m2msupport.netConnection:keep-alive<cr><if>
+GET https://postman-echo.com/ip HTTP/1.0
+
+ERROR
+
++IPCLOSE: 1,1
+at
+
+OK
+AT+CIPOPEN=1,"TCP","postman-echo.com", 80
+
+OK
+
++CIPOPEN: 1,0
+AT+CIPSEND=1
+
+>GET https://postman-echo.com/ip HT	TP/1.0
+GET https://postman-echo.com/ip HTTP/1.0
+
+
+ERROR
+
++IPCLOSE: 1,1
+AT+CIPOPEN=1,"TCP","postman-echo.com", 80
+
+OK
+
++CIPOPEN: 1,0
+AT+CIPSEND=1,41
+
+>
+*ISIMAID: "A0000000871004FF49FF0589"
+
++CPIN: READY
+
+*ATREADY: 1
+
+SMS DONE
+GET https://postman-echo.com/ip HTTP/1.0
+
++CGEV: EPS PDN ACT 1
+
+PB DONE
+at+netopen
+
+OK
+
++NETOPEN: 0
+at+cipopen=1,"TCP","postman-echo.com",80
+
+OK
+
++CIPOPEN: 1,0
+AT+CIPSEND
+
+ERROR
+AT+CIPSEND=1,40
+
+>GET https://postman-echo.com/ip HTTP/1.
+OK
+
++CIPSEND: 1,40,40
+
+RECV FROM:52.20.3.214:80
++IPD272
+HTTP/1.1 400 Bad Request
+Server: awselb/2.0
+Date: Wed, 15 May 2024 08:50:29 GMT
+Content-Type: text/html
+Content-Length: 122
+Connection: close
+
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+</body>
+</html>
+
++IPCLOSE: 1,1
+*NOTE-2024.05.15@15:50:46 - LogNote
+AT+CIPOPEN=1,"TCP","34.230.40.69", 30000
+
+OK
+
++CIPOPEN: 1,1
+AT+CIPSEND=1,40
+
++CIPERROR: 4
+
+ERROR
+at+cpof
+
+OK
+
++CGEV: ME DETACH
+
++CGEV: NW PDN DEACT 1
+
++CIPEVENT: NETWORK CLOSED UNEXPECTEDLY
