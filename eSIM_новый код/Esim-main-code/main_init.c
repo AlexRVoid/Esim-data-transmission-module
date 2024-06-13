@@ -69,7 +69,7 @@ GPIOB->CRL &= ~GPIO_CRL_CNF6;
 	// Внешний порт (получает\отдаёт инструкции с\на устройво)
 	// Включаем тактирование порта GPIOA и блока альтернативных функций
 	RCC->APB1ENR |= RCC_APB1ENR_USART2EN; // Включаем тактирование USART2
-	// PA2 (TX1) AFIO Push-Pull, 10MHz. PA3 (RX1) HiZ, 10MHz
+	// PA2 (TX2) AFIO Push-Pull, 10MHz. PA3 (RX2) HiZ, 10MHz
 	// Вначале устанавливаем пары бит в "00", это делать обязательно !
 	GPIOA->CRL &= ~(GPIO_CRL_MODE2 | GPIO_CRL_CNF2 | GPIO_CRL_MODE3 | GPIO_CRL_CNF3);
 	// Потом нужные биты устанавливаем в '1'
