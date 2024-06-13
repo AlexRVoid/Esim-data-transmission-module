@@ -95,6 +95,7 @@ void USART2_IRQHandler() {
 //================================================================
 
 
+
 void StartSocketService(){ //Инициализация веб сокета для работы с сетью и TCP/IP
 	
 	modeToRetrieveDataCommand[12] = '0';//Установка автоматического вывода сообщенияпринятого по TCP
@@ -145,6 +146,46 @@ void SMS_search(volatile uint8_t command[], volatile uint8_t commandSize){//Функ
 		}
 	}
 	commandProcessing = 0;
+}
+
+uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){ //Отправка СМС сообщения на указанный номер
+	a = 0;
+	responseIndex = 0;
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+		sendSMSCommand[i+9] = phoneNum[i];
+	}
+	sendSMSCommand[21] = '\"';
+	sendSMSCommand[22] = 0x0D;
+	responseIndex = 0;
+	Send_command_from_uart_to_simcom(sendSMSCommand, 23);//Отправка АТ команды в simcom
+	sendSMSCommandResponseDelay = 50;//ожидание отклика команды
+	while((a == 0 && sendDelay != 0) || sendSMSCommandResponseDelay != 0){}
+	if (a == 0){//В случае отсутствия отклика отправить сообщение об ошибке, выйти из функции
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+		USART2->DR = 'E';return 0;
+	}
+	x = 0;
+	
+	while(x < responseIndex){
+		
+		while(responseBuffer[x] == 62){//Поиск символа '>' в ответе от simcom , символ '>' служит указателем начала текста СМС сообщения
+			
+			
+			Send_command_from_uart_to_simcom(message, messageLength);//Отправка в simcom текста сообщения
+			delay_ms(5000);
+			USART1->DR = 0x1A;//Отправка СМС сообщения адресату
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+			USART2->DR = 'S';//Сообщение об отправке СМС сообщения
+			return 1;
+			
+		}
+		x++;
+	}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+	USART2->DR = 'E';// При отсутствии символа начала текста сообщения вывести сообщение ошибки
+	return 0;
+	
 }
 
 uint8_t Command_check(volatile uint8_t command[], volatile uint8_t commandSize){// Проверка пользовательских команд
@@ -293,45 +334,6 @@ uint8_t Command_check(volatile uint8_t command[], volatile uint8_t commandSize){
 	return 0;
 }
 
-uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){ //Отправка СМС сообщения на указанный номер
-	a = 0;
-	responseIndex = 0;
-	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
-		sendSMSCommand[i+9] = phoneNum[i];
-	}
-	sendSMSCommand[21] = '\"';
-	sendSMSCommand[22] = 0x0D;
-	responseIndex = 0;
-	Send_command_from_uart_to_simcom(sendSMSCommand, 23);//Отправка АТ команды в simcom
-	sendSMSCommandResponseDelay = 50;//ожидание отклика команды
-	while((a == 0 && sendDelay != 0) || sendSMSCommandResponseDelay != 0){}
-	if (a == 0){//В случае отсутствия отклика отправить сообщение об ошибке, выйти из функции
-		while ((USART2->SR & USART_SR_TXE) == 0) {};
-		USART2->DR = 'E';return 0;
-	}
-	x = 0;
-	
-	while(x < responseIndex){
-		
-		while(responseBuffer[x] == 62){//Поиск символа '>' в ответе от simcom , символ '>' служит указателем начала текста СМС сообщения
-			
-			
-			Send_command_from_uart_to_simcom(message, messageLength);//Отправка в simcom текста сообщения
-			delay_ms(5000);
-			USART1->DR = 0x1A;//Отправка СМС сообщения адресату
-			while ((USART2->SR & USART_SR_TXE) == 0) {};
-			USART2->DR = 'S';//Сообщение об отправке СМС сообщения
-			return 1;
-			
-		}
-		x++;
-	}
-	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
-	while ((USART2->SR & USART_SR_TXE) == 0) {};
-	USART2->DR = 'E';// При отсутствии символа начала текста сообщения вывести сообщение ошибки
-	return 0;
-	
-}
 
 void TCP_IP_Connect(volatile uint8_t ip[], volatile uint8_t ipLenght, volatile uint8_t port[], volatile uint8_t portLength){//Функция подключения по TCP/IP
 	// Send_command_from_uart_to_simcom(startSocketServiceCommand, 11);//Дублирование отправки команды открытися службы сокетов

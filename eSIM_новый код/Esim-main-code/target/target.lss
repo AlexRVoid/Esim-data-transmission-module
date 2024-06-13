@@ -1,0 +1,1954 @@
+
+target/target.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000d7c  08000000  08000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         000000dc  20000000  08000d7c  00020000  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000698  200000dc  08000e58  000200dc  2**2
+                  ALLOC
+  3 ._stack       000000c8  20000774  080014f0  000200dc  2**0
+                  ALLOC
+  4 .debug_info   0000161c  00000000  00000000  000200dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 0000042c  00000000  00000000  000216f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_loc    0000081f  00000000  00000000  00021b24  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_aranges 000000b8  00000000  00000000  00022343  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_ranges 00000130  00000000  00000000  000223fb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   00000662  00000000  00000000  0002252b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000a96  00000000  00000000  00022b8d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .comment      0000007f  00000000  00000000  00023623  2**0
+                  CONTENTS, READONLY
+ 12 .ARM.attributes 00000033  00000000  00000000  000236a2  2**0
+                  CONTENTS, READONLY
+ 13 .debug_frame  000001ec  00000000  00000000  000236d8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+08000000 <table_interrupt_vector>:
+ 8000000:	00 28 00 20 39 01 00 08 35 01 00 08 35 01 00 08     .(. 9...5...5...
+ 8000010:	35 01 00 08 35 01 00 08 35 01 00 08 00 00 00 00     5...5...5.......
+ 8000020:	00 00 00 00 00 00 00 00 00 00 00 00 35 01 00 08     ............5...
+ 8000030:	35 01 00 08 00 00 00 00 35 01 00 08 35 01 00 08     5.......5...5...
+ 8000040:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000050:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000060:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000070:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000080:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000090:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 80000a0:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 80000b0:	61 0a 00 08 35 01 00 08 35 01 00 08 35 01 00 08     a...5...5...5...
+ 80000c0:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 80000d0:	35 01 00 08 39 02 00 08 71 02 00 08 35 01 00 08     5...9...q...5...
+ 80000e0:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 80000f0:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000100:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000110:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000120:	35 01 00 08 35 01 00 08 35 01 00 08 35 01 00 08     5...5...5...5...
+ 8000130:	35 01 00 08                                         5...
+
+08000134 <handler_default>:
+	main();
+}
+
+//-----------------------------------------------------------------------------
+void handler_default(void)
+{
+ 8000134:	e7fe      	b.n	8000134 <handler_default>
+ 8000136:	0000      	movs	r0, r0
+
+08000138 <handler_reset>:
+{
+ 8000138:	4a09      	ldr	r2, [pc, #36]	; (8000160 <handler_reset+0x28>)
+ 800013a:	4b0a      	ldr	r3, [pc, #40]	; (8000164 <handler_reset+0x2c>)
+	for (destination = &_data_begin; destination < &_data_end;)
+ 800013c:	490a      	ldr	r1, [pc, #40]	; (8000168 <handler_reset+0x30>)
+ 800013e:	428b      	cmp	r3, r1
+ 8000140:	d306      	bcc.n	8000150 <handler_reset+0x18>
+	  *(destination++) = 0;
+ 8000142:	2100      	movs	r1, #0
+ 8000144:	4b09      	ldr	r3, [pc, #36]	; (800016c <handler_reset+0x34>)
+	for (destination = &_bss_begin; destination < &_bss_end;)
+ 8000146:	4a0a      	ldr	r2, [pc, #40]	; (8000170 <handler_reset+0x38>)
+ 8000148:	4293      	cmp	r3, r2
+ 800014a:	d306      	bcc.n	800015a <handler_reset+0x22>
+	main();
+ 800014c:	f000 bcd4 	b.w	8000af8 <main>
+	  *(destination++) = *(source++);
+ 8000150:	f852 0f04 	ldr.w	r0, [r2, #4]!
+ 8000154:	f843 0b04 	str.w	r0, [r3], #4
+ 8000158:	e7f1      	b.n	800013e <handler_reset+0x6>
+	  *(destination++) = 0;
+ 800015a:	f843 1b04 	str.w	r1, [r3], #4
+ 800015e:	e7f3      	b.n	8000148 <handler_reset+0x10>
+ 8000160:	08000d78 	.word	0x08000d78
+ 8000164:	20000000 	.word	0x20000000
+ 8000168:	200000dc 	.word	0x200000dc
+ 800016c:	200000dc 	.word	0x200000dc
+ 8000170:	20000774 	.word	0x20000774
+
+08000174 <delay_ms>:
+}
+
+// Функция задержки в мс от 1 мс до 59 сек. (дальше переполнение)
+static __INLINE void delay_ms(uint32_t ms) {
+static volatile uint32_t n;
+n =  ms * 24000; DWT_CYCCNT = 0; while (DWT_CYCCNT < n) ;
+ 8000174:	f645 53c0 	movw	r3, #24000	; 0x5dc0
+ 8000178:	2100      	movs	r1, #0
+ 800017a:	4358      	muls	r0, r3
+ 800017c:	4a04      	ldr	r2, [pc, #16]	; (8000190 <delay_ms+0x1c>)
+ 800017e:	4b05      	ldr	r3, [pc, #20]	; (8000194 <delay_ms+0x20>)
+ 8000180:	6018      	str	r0, [r3, #0]
+ 8000182:	6011      	str	r1, [r2, #0]
+ 8000184:	6810      	ldr	r0, [r2, #0]
+ 8000186:	6819      	ldr	r1, [r3, #0]
+ 8000188:	4288      	cmp	r0, r1
+ 800018a:	d3fb      	bcc.n	8000184 <delay_ms+0x10>
+}
+ 800018c:	4770      	bx	lr
+ 800018e:	bf00      	nop
+ 8000190:	e0001004 	.word	0xe0001004
+ 8000194:	200000e4 	.word	0x200000e4
+
+08000198 <Send_command_from_simcom_to_uart>:
+
+// ============== Подпрограммы обработки прерывания ==============
+
+void Send_command_from_simcom_to_uart(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с simcom в МК
+	for (i = 0; i < commandSize; i++){
+ 8000198:	2200      	movs	r2, #0
+void Send_command_from_simcom_to_uart(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с simcom в МК
+ 800019a:	b513      	push	{r0, r1, r4, lr}
+	for (i = 0; i < commandSize; i++){
+ 800019c:	4b0e      	ldr	r3, [pc, #56]	; (80001d8 <Send_command_from_simcom_to_uart+0x40>)
+void Send_command_from_simcom_to_uart(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с simcom в МК
+ 800019e:	f88d 1007 	strb.w	r1, [sp, #7]
+		while ((USART2->SR & USART_SR_TXE) == 0) {};//Проверка свободен ли канал и готов ли МК принимать данные 
+ 80001a2:	490e      	ldr	r1, [pc, #56]	; (80001dc <Send_command_from_simcom_to_uart+0x44>)
+	for (i = 0; i < commandSize; i++){
+ 80001a4:	701a      	strb	r2, [r3, #0]
+ 80001a6:	781c      	ldrb	r4, [r3, #0]
+ 80001a8:	f89d 2007 	ldrb.w	r2, [sp, #7]
+ 80001ac:	4294      	cmp	r4, r2
+ 80001ae:	d306      	bcc.n	80001be <Send_command_from_simcom_to_uart+0x26>
+		USART2->DR = command[i];
+	}
+	responseIndex = 0;
+ 80001b0:	2300      	movs	r3, #0
+ 80001b2:	4a0b      	ldr	r2, [pc, #44]	; (80001e0 <Send_command_from_simcom_to_uart+0x48>)
+ 80001b4:	7013      	strb	r3, [r2, #0]
+	a = 0;
+ 80001b6:	4a0b      	ldr	r2, [pc, #44]	; (80001e4 <Send_command_from_simcom_to_uart+0x4c>)
+ 80001b8:	7013      	strb	r3, [r2, #0]
+}
+ 80001ba:	b002      	add	sp, #8
+ 80001bc:	bd10      	pop	{r4, pc}
+		while ((USART2->SR & USART_SR_TXE) == 0) {};//Проверка свободен ли канал и готов ли МК принимать данные 
+ 80001be:	880a      	ldrh	r2, [r1, #0]
+ 80001c0:	0612      	lsls	r2, r2, #24
+ 80001c2:	d5fc      	bpl.n	80001be <Send_command_from_simcom_to_uart+0x26>
+		USART2->DR = command[i];
+ 80001c4:	781a      	ldrb	r2, [r3, #0]
+ 80001c6:	b2d2      	uxtb	r2, r2
+ 80001c8:	5c82      	ldrb	r2, [r0, r2]
+ 80001ca:	808a      	strh	r2, [r1, #4]
+	for (i = 0; i < commandSize; i++){
+ 80001cc:	781a      	ldrb	r2, [r3, #0]
+ 80001ce:	3201      	adds	r2, #1
+ 80001d0:	b2d2      	uxtb	r2, r2
+ 80001d2:	701a      	strb	r2, [r3, #0]
+ 80001d4:	e7e7      	b.n	80001a6 <Send_command_from_simcom_to_uart+0xe>
+ 80001d6:	bf00      	nop
+ 80001d8:	200000e2 	.word	0x200000e2
+ 80001dc:	40004400 	.word	0x40004400
+ 80001e0:	200000e8 	.word	0x200000e8
+ 80001e4:	200000de 	.word	0x200000de
+
+080001e8 <Send_command_from_uart_to_simcom>:
+
+void Send_command_from_uart_to_simcom(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с МК в simcom
+	
+	for (i = 0; i < commandSize; i++){
+ 80001e8:	2200      	movs	r2, #0
+void Send_command_from_uart_to_simcom(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с МК в simcom
+ 80001ea:	b513      	push	{r0, r1, r4, lr}
+	for (i = 0; i < commandSize; i++){
+ 80001ec:	4b0e      	ldr	r3, [pc, #56]	; (8000228 <Send_command_from_uart_to_simcom+0x40>)
+void Send_command_from_uart_to_simcom(volatile uint8_t command[], volatile uint8_t commandSize){//Функция отправки данных с МК в simcom
+ 80001ee:	f88d 1007 	strb.w	r1, [sp, #7]
+		while ((USART1->SR & USART_SR_TXE) == 0) {};//Проверка свободен ли канал и готов ли simcom принимать данные 
+ 80001f2:	490e      	ldr	r1, [pc, #56]	; (800022c <Send_command_from_uart_to_simcom+0x44>)
+	for (i = 0; i < commandSize; i++){
+ 80001f4:	701a      	strb	r2, [r3, #0]
+ 80001f6:	781c      	ldrb	r4, [r3, #0]
+ 80001f8:	f89d 2007 	ldrb.w	r2, [sp, #7]
+ 80001fc:	4294      	cmp	r4, r2
+ 80001fe:	d306      	bcc.n	800020e <Send_command_from_uart_to_simcom+0x26>
+		USART1->DR = command[i];
+	}
+	commandIndex = 0;
+ 8000200:	2300      	movs	r3, #0
+ 8000202:	4a0b      	ldr	r2, [pc, #44]	; (8000230 <Send_command_from_uart_to_simcom+0x48>)
+ 8000204:	7013      	strb	r3, [r2, #0]
+	b = 0;
+ 8000206:	4a0b      	ldr	r2, [pc, #44]	; (8000234 <Send_command_from_uart_to_simcom+0x4c>)
+ 8000208:	7013      	strb	r3, [r2, #0]
+	
+}
+ 800020a:	b002      	add	sp, #8
+ 800020c:	bd10      	pop	{r4, pc}
+		while ((USART1->SR & USART_SR_TXE) == 0) {};//Проверка свободен ли канал и готов ли simcom принимать данные 
+ 800020e:	880a      	ldrh	r2, [r1, #0]
+ 8000210:	0612      	lsls	r2, r2, #24
+ 8000212:	d5fc      	bpl.n	800020e <Send_command_from_uart_to_simcom+0x26>
+		USART1->DR = command[i];
+ 8000214:	781a      	ldrb	r2, [r3, #0]
+ 8000216:	b2d2      	uxtb	r2, r2
+ 8000218:	5c82      	ldrb	r2, [r0, r2]
+ 800021a:	808a      	strh	r2, [r1, #4]
+	for (i = 0; i < commandSize; i++){
+ 800021c:	781a      	ldrb	r2, [r3, #0]
+ 800021e:	3201      	adds	r2, #1
+ 8000220:	b2d2      	uxtb	r2, r2
+ 8000222:	701a      	strb	r2, [r3, #0]
+ 8000224:	e7e7      	b.n	80001f6 <Send_command_from_uart_to_simcom+0xe>
+ 8000226:	bf00      	nop
+ 8000228:	200000e2 	.word	0x200000e2
+ 800022c:	40013800 	.word	0x40013800
+ 8000230:	200000e0 	.word	0x200000e0
+ 8000234:	200000df 	.word	0x200000df
+
+08000238 <USART1_IRQHandler>:
+
+void USART1_IRQHandler() {
+	
+	static u8 ch1;
+	ch1 = USART1->DR; 
+ 8000238:	4b08      	ldr	r3, [pc, #32]	; (800025c <USART1_IRQHandler+0x24>)
+	
+	responseBuffer[responseIndex++] = ch1; // Добавляем символ в массив команды
+ 800023a:	4809      	ldr	r0, [pc, #36]	; (8000260 <USART1_IRQHandler+0x28>)
+	ch1 = USART1->DR; 
+ 800023c:	889a      	ldrh	r2, [r3, #4]
+	responseBuffer[responseIndex++] = ch1; // Добавляем символ в массив команды
+ 800023e:	7803      	ldrb	r3, [r0, #0]
+	ch1 = USART1->DR; 
+ 8000240:	b2d2      	uxtb	r2, r2
+	responseBuffer[responseIndex++] = ch1; // Добавляем символ в массив команды
+ 8000242:	b2db      	uxtb	r3, r3
+ 8000244:	1c59      	adds	r1, r3, #1
+ 8000246:	b2c9      	uxtb	r1, r1
+ 8000248:	7001      	strb	r1, [r0, #0]
+ 800024a:	4906      	ldr	r1, [pc, #24]	; (8000264 <USART1_IRQHandler+0x2c>)
+ 800024c:	54ca      	strb	r2, [r1, r3]
+	
+	sendDelay = 18;
+ 800024e:	2212      	movs	r2, #18
+ 8000250:	4b05      	ldr	r3, [pc, #20]	; (8000268 <USART1_IRQHandler+0x30>)
+ 8000252:	701a      	strb	r2, [r3, #0]
+	a = 1;
+ 8000254:	2201      	movs	r2, #1
+ 8000256:	4b05      	ldr	r3, [pc, #20]	; (800026c <USART1_IRQHandler+0x34>)
+ 8000258:	701a      	strb	r2, [r3, #0]
+ 800025a:	4770      	bx	lr
+ 800025c:	40013800 	.word	0x40013800
+ 8000260:	200000e8 	.word	0x200000e8
+ 8000264:	2000038c 	.word	0x2000038c
+ 8000268:	200000e9 	.word	0x200000e9
+ 800026c:	200000de 	.word	0x200000de
+
+08000270 <USART2_IRQHandler>:
+	
+}
+
+void USART2_IRQHandler() {
+	static u8 ch2;
+	ch2 = USART2->DR; 
+ 8000270:	4b08      	ldr	r3, [pc, #32]	; (8000294 <USART2_IRQHandler+0x24>)
+	
+	commandBuffer[commandIndex++] = ch2; // Добавляем символ в массив команды
+ 8000272:	4809      	ldr	r0, [pc, #36]	; (8000298 <USART2_IRQHandler+0x28>)
+	ch2 = USART2->DR; 
+ 8000274:	889a      	ldrh	r2, [r3, #4]
+	commandBuffer[commandIndex++] = ch2; // Добавляем символ в массив команды
+ 8000276:	7803      	ldrb	r3, [r0, #0]
+	ch2 = USART2->DR; 
+ 8000278:	b2d2      	uxtb	r2, r2
+	commandBuffer[commandIndex++] = ch2; // Добавляем символ в массив команды
+ 800027a:	b2db      	uxtb	r3, r3
+ 800027c:	1c59      	adds	r1, r3, #1
+ 800027e:	b2c9      	uxtb	r1, r1
+ 8000280:	7001      	strb	r1, [r0, #0]
+ 8000282:	4906      	ldr	r1, [pc, #24]	; (800029c <USART2_IRQHandler+0x2c>)
+ 8000284:	54ca      	strb	r2, [r1, r3]
+	
+	sendDelay = 4;
+ 8000286:	2204      	movs	r2, #4
+ 8000288:	4b05      	ldr	r3, [pc, #20]	; (80002a0 <USART2_IRQHandler+0x30>)
+ 800028a:	701a      	strb	r2, [r3, #0]
+	b = 1;
+ 800028c:	2201      	movs	r2, #1
+ 800028e:	4b05      	ldr	r3, [pc, #20]	; (80002a4 <USART2_IRQHandler+0x34>)
+ 8000290:	701a      	strb	r2, [r3, #0]
+ 8000292:	4770      	bx	lr
+ 8000294:	40004400 	.word	0x40004400
+ 8000298:	200000e0 	.word	0x200000e0
+ 800029c:	200000ee 	.word	0x200000ee
+ 80002a0:	200000e9 	.word	0x200000e9
+ 80002a4:	200000df 	.word	0x200000df
+
+080002a8 <StartSocketService>:
+
+
+
+void StartSocketService(){ //Инициализация веб сокета для работы с сетью и TCP/IP
+	
+	modeToRetrieveDataCommand[12] = '0';//Установка автоматического вывода сообщенияпринятого по TCP
+ 80002a8:	2330      	movs	r3, #48	; 0x30
+void StartSocketService(){ //Инициализация веб сокета для работы с сетью и TCP/IP
+ 80002aa:	b570      	push	{r4, r5, r6, lr}
+	Send_command_from_uart_to_simcom(modeToRetrieveDataCommand, 14);//Отправка АТ команды в simcom
+	delay_ms(5000);//ожидание отклика команды 
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+	
+	addIPHeaderCommand[11] = '1';//Установка IP хедера формата: "+IPD(data length)", при выводе принятых данных по TCP
+ 80002ac:	2631      	movs	r6, #49	; 0x31
+	modeToRetrieveDataCommand[12] = '0';//Установка автоматического вывода сообщенияпринятого по TCP
+ 80002ae:	481b      	ldr	r0, [pc, #108]	; (800031c <StartSocketService+0x74>)
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 80002b0:	4d1b      	ldr	r5, [pc, #108]	; (8000320 <StartSocketService+0x78>)
+ 80002b2:	4c1c      	ldr	r4, [pc, #112]	; (8000324 <StartSocketService+0x7c>)
+	Send_command_from_uart_to_simcom(modeToRetrieveDataCommand, 14);//Отправка АТ команды в simcom
+ 80002b4:	210e      	movs	r1, #14
+	modeToRetrieveDataCommand[12] = '0';//Установка автоматического вывода сообщенияпринятого по TCP
+ 80002b6:	7303      	strb	r3, [r0, #12]
+	Send_command_from_uart_to_simcom(modeToRetrieveDataCommand, 14);//Отправка АТ команды в simcom
+ 80002b8:	f7ff ff96 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	delay_ms(5000);//ожидание отклика команды 
+ 80002bc:	f241 3088 	movw	r0, #5000	; 0x1388
+ 80002c0:	f7ff ff58 	bl	8000174 <delay_ms>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 80002c4:	7829      	ldrb	r1, [r5, #0]
+ 80002c6:	4620      	mov	r0, r4
+ 80002c8:	f7ff ff66 	bl	8000198 <Send_command_from_simcom_to_uart>
+	addIPHeaderCommand[11] = '1';//Установка IP хедера формата: "+IPD(data length)", при выводе принятых данных по TCP
+ 80002cc:	4816      	ldr	r0, [pc, #88]	; (8000328 <StartSocketService+0x80>)
+	Send_command_from_uart_to_simcom(addIPHeaderCommand, 13);//Отправка АТ команды в simcom
+ 80002ce:	210d      	movs	r1, #13
+	addIPHeaderCommand[11] = '1';//Установка IP хедера формата: "+IPD(data length)", при выводе принятых данных по TCP
+ 80002d0:	72c6      	strb	r6, [r0, #11]
+	Send_command_from_uart_to_simcom(addIPHeaderCommand, 13);//Отправка АТ команды в simcom
+ 80002d2:	f7ff ff89 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	delay_ms(5000);//ожидание отклика команды 
+ 80002d6:	f241 3088 	movw	r0, #5000	; 0x1388
+ 80002da:	f7ff ff4b 	bl	8000174 <delay_ms>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 80002de:	7829      	ldrb	r1, [r5, #0]
+ 80002e0:	4620      	mov	r0, r4
+ 80002e2:	f7ff ff59 	bl	8000198 <Send_command_from_simcom_to_uart>
+	
+	showRemoteIPAddressAndPortCommand[11] = '1';//Установка вывода IP и порта при приёме данных по TCP формата: "RECV FROM:<IP ADDRESS>:<PORT>"
+ 80002e6:	4811      	ldr	r0, [pc, #68]	; (800032c <StartSocketService+0x84>)
+	Send_command_from_uart_to_simcom(showRemoteIPAddressAndPortCommand, 13);//Отправка АТ команды в simcom
+ 80002e8:	210d      	movs	r1, #13
+	showRemoteIPAddressAndPortCommand[11] = '1';//Установка вывода IP и порта при приёме данных по TCP формата: "RECV FROM:<IP ADDRESS>:<PORT>"
+ 80002ea:	72c6      	strb	r6, [r0, #11]
+	Send_command_from_uart_to_simcom(showRemoteIPAddressAndPortCommand, 13);//Отправка АТ команды в simcom
+ 80002ec:	f7ff ff7c 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	delay_ms(5000);//ожидание отклика команды 
+ 80002f0:	f241 3088 	movw	r0, #5000	; 0x1388
+ 80002f4:	f7ff ff3e 	bl	8000174 <delay_ms>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 80002f8:	7829      	ldrb	r1, [r5, #0]
+ 80002fa:	4620      	mov	r0, r4
+ 80002fc:	f7ff ff4c 	bl	8000198 <Send_command_from_simcom_to_uart>
+	
+	Send_command_from_uart_to_simcom(startSocketServiceCommand, 11);//Отправка АТ команды открытия сервиса сокетов в simcom
+ 8000300:	210b      	movs	r1, #11
+ 8000302:	480b      	ldr	r0, [pc, #44]	; (8000330 <StartSocketService+0x88>)
+ 8000304:	f7ff ff70 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	delay_ms(5000);//ожидание отклика команды 
+ 8000308:	f241 3088 	movw	r0, #5000	; 0x1388
+ 800030c:	f7ff ff32 	bl	8000174 <delay_ms>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 8000310:	7829      	ldrb	r1, [r5, #0]
+ 8000312:	4620      	mov	r0, r4
+}
+ 8000314:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Вывод результата выполнения команды 
+ 8000318:	f7ff bf3e 	b.w	8000198 <Send_command_from_simcom_to_uart>
+ 800031c:	2000007c 	.word	0x2000007c
+ 8000320:	200000e8 	.word	0x200000e8
+ 8000324:	2000038c 	.word	0x2000038c
+ 8000328:	2000005a 	.word	0x2000005a
+ 800032c:	200000c2 	.word	0x200000c2
+ 8000330:	200000cf 	.word	0x200000cf
+
+08000334 <SMS_search>:
+
+void SMS_search(volatile uint8_t command[], volatile uint8_t commandSize){//Функция поиска СМС сообщений и вывода их на мк
+ 8000334:	e92d 43f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+	commandProcessing = 1;//Флаг обработки СМС сообщения
+ 8000338:	2201      	movs	r2, #1
+ 800033a:	4b32      	ldr	r3, [pc, #200]	; (8000404 <SMS_search+0xd0>)
+void SMS_search(volatile uint8_t command[], volatile uint8_t commandSize){//Функция поиска СМС сообщений и вывода их на мк
+ 800033c:	f88d 1007 	strb.w	r1, [sp, #7]
+	commandProcessing = 1;//Флаг обработки СМС сообщения
+ 8000340:	701a      	strb	r2, [r3, #0]
+	
+	for (i = 0; i < commandSize; i++){
+ 8000342:	2200      	movs	r2, #0
+void SMS_search(volatile uint8_t command[], volatile uint8_t commandSize){//Функция поиска СМС сообщений и вывода их на мк
+ 8000344:	4607      	mov	r7, r0
+ 8000346:	4698      	mov	r8, r3
+	for (i = 0; i < commandSize; i++){
+ 8000348:	4c2f      	ldr	r4, [pc, #188]	; (8000408 <SMS_search+0xd4>)
+					
+					while(command[i] != ','){//Поиск индекса СМС сообщения
+						i++;
+					}
+					i++;
+					for (y = 8; command[i] != 0x0D; i++, y++){
+ 800034a:	4e30      	ldr	r6, [pc, #192]	; (800040c <SMS_search+0xd8>)
+	for (i = 0; i < commandSize; i++){
+ 800034c:	7022      	strb	r2, [r4, #0]
+ 800034e:	7822      	ldrb	r2, [r4, #0]
+ 8000350:	f89d 3007 	ldrb.w	r3, [sp, #7]
+ 8000354:	429a      	cmp	r2, r3
+ 8000356:	d305      	bcc.n	8000364 <SMS_search+0x30>
+					Send_command_from_uart_to_simcom(readSMSCommand, y+1);//Отправка АТ команды 
+				}
+			}
+		}
+	}
+	commandProcessing = 0;
+ 8000358:	2300      	movs	r3, #0
+ 800035a:	f888 3000 	strb.w	r3, [r8]
+}
+ 800035e:	b003      	add	sp, #12
+ 8000360:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+		if(command[i] == '+'){//Поиск начального символа уведомления о СМС сообщении
+ 8000364:	7823      	ldrb	r3, [r4, #0]
+ 8000366:	b2db      	uxtb	r3, r3
+ 8000368:	5cfb      	ldrb	r3, [r7, r3]
+ 800036a:	2b2b      	cmp	r3, #43	; 0x2b
+ 800036c:	d004      	beq.n	8000378 <SMS_search+0x44>
+	for (i = 0; i < commandSize; i++){
+ 800036e:	7823      	ldrb	r3, [r4, #0]
+ 8000370:	3301      	adds	r3, #1
+ 8000372:	b2db      	uxtb	r3, r3
+ 8000374:	7023      	strb	r3, [r4, #0]
+ 8000376:	e7ea      	b.n	800034e <SMS_search+0x1a>
+			x = 0;
+ 8000378:	2300      	movs	r3, #0
+ 800037a:	4d25      	ldr	r5, [pc, #148]	; (8000410 <SMS_search+0xdc>)
+			while (command[i] == newSMSReferenceResponse[x]){//Проверка уведомления о СМС сообщении
+ 800037c:	f8df 9098 	ldr.w	r9, [pc, #152]	; 8000418 <SMS_search+0xe4>
+			x = 0;
+ 8000380:	702b      	strb	r3, [r5, #0]
+			while (command[i] == newSMSReferenceResponse[x]){//Проверка уведомления о СМС сообщении
+ 8000382:	7823      	ldrb	r3, [r4, #0]
+ 8000384:	b2db      	uxtb	r3, r3
+ 8000386:	5cfa      	ldrb	r2, [r7, r3]
+ 8000388:	782b      	ldrb	r3, [r5, #0]
+ 800038a:	b2db      	uxtb	r3, r3
+ 800038c:	f819 3003 	ldrb.w	r3, [r9, r3]
+ 8000390:	429a      	cmp	r2, r3
+ 8000392:	d1ec      	bne.n	800036e <SMS_search+0x3a>
+				i++;
+ 8000394:	7823      	ldrb	r3, [r4, #0]
+ 8000396:	3301      	adds	r3, #1
+ 8000398:	b2db      	uxtb	r3, r3
+ 800039a:	7023      	strb	r3, [r4, #0]
+				x++;
+ 800039c:	782b      	ldrb	r3, [r5, #0]
+ 800039e:	3301      	adds	r3, #1
+ 80003a0:	b2db      	uxtb	r3, r3
+ 80003a2:	702b      	strb	r3, [r5, #0]
+				if (x == 6) {//В случае нахождения уведомления о СМС сообщении выводит полученное сообщение
+ 80003a4:	782b      	ldrb	r3, [r5, #0]
+ 80003a6:	2b06      	cmp	r3, #6
+ 80003a8:	d1eb      	bne.n	8000382 <SMS_search+0x4e>
+					while(command[i] != ','){//Поиск индекса СМС сообщения
+ 80003aa:	7823      	ldrb	r3, [r4, #0]
+ 80003ac:	b2db      	uxtb	r3, r3
+ 80003ae:	5cfb      	ldrb	r3, [r7, r3]
+ 80003b0:	2b2c      	cmp	r3, #44	; 0x2c
+						i++;
+ 80003b2:	7823      	ldrb	r3, [r4, #0]
+ 80003b4:	f103 0301 	add.w	r3, r3, #1
+ 80003b8:	b2db      	uxtb	r3, r3
+ 80003ba:	7023      	strb	r3, [r4, #0]
+					while(command[i] != ','){//Поиск индекса СМС сообщения
+ 80003bc:	d1f5      	bne.n	80003aa <SMS_search+0x76>
+					for (y = 8; command[i] != 0x0D; i++, y++){
+ 80003be:	2308      	movs	r3, #8
+ 80003c0:	4a14      	ldr	r2, [pc, #80]	; (8000414 <SMS_search+0xe0>)
+ 80003c2:	7033      	strb	r3, [r6, #0]
+ 80003c4:	7823      	ldrb	r3, [r4, #0]
+ 80003c6:	b2db      	uxtb	r3, r3
+ 80003c8:	5cfb      	ldrb	r3, [r7, r3]
+ 80003ca:	b2db      	uxtb	r3, r3
+ 80003cc:	2b0d      	cmp	r3, #13
+ 80003ce:	d109      	bne.n	80003e4 <SMS_search+0xb0>
+					readSMSCommand[y] = 0x0D;
+ 80003d0:	7831      	ldrb	r1, [r6, #0]
+					Send_command_from_uart_to_simcom(readSMSCommand, y+1);//Отправка АТ команды 
+ 80003d2:	4810      	ldr	r0, [pc, #64]	; (8000414 <SMS_search+0xe0>)
+					readSMSCommand[y] = 0x0D;
+ 80003d4:	b2c9      	uxtb	r1, r1
+ 80003d6:	5453      	strb	r3, [r2, r1]
+					Send_command_from_uart_to_simcom(readSMSCommand, y+1);//Отправка АТ команды 
+ 80003d8:	7831      	ldrb	r1, [r6, #0]
+ 80003da:	3101      	adds	r1, #1
+ 80003dc:	b2c9      	uxtb	r1, r1
+ 80003de:	f7ff ff03 	bl	80001e8 <Send_command_from_uart_to_simcom>
+ 80003e2:	e7ce      	b.n	8000382 <SMS_search+0x4e>
+						readSMSCommand[y] = command[i];//Формирование АТ команды для вывода СМС сообщения 
+ 80003e4:	7833      	ldrb	r3, [r6, #0]
+ 80003e6:	7821      	ldrb	r1, [r4, #0]
+ 80003e8:	b2db      	uxtb	r3, r3
+ 80003ea:	b2c9      	uxtb	r1, r1
+ 80003ec:	5c79      	ldrb	r1, [r7, r1]
+ 80003ee:	b2c9      	uxtb	r1, r1
+ 80003f0:	54d1      	strb	r1, [r2, r3]
+					for (y = 8; command[i] != 0x0D; i++, y++){
+ 80003f2:	7823      	ldrb	r3, [r4, #0]
+ 80003f4:	3301      	adds	r3, #1
+ 80003f6:	b2db      	uxtb	r3, r3
+ 80003f8:	7023      	strb	r3, [r4, #0]
+ 80003fa:	7833      	ldrb	r3, [r6, #0]
+ 80003fc:	3301      	adds	r3, #1
+ 80003fe:	b2db      	uxtb	r3, r3
+ 8000400:	7033      	strb	r3, [r6, #0]
+ 8000402:	e7df      	b.n	80003c4 <SMS_search+0x90>
+ 8000404:	200000e1 	.word	0x200000e1
+ 8000408:	200000e2 	.word	0x200000e2
+ 800040c:	200000ed 	.word	0x200000ed
+ 8000410:	200000ec 	.word	0x200000ec
+ 8000414:	20000090 	.word	0x20000090
+ 8000418:	2000008a 	.word	0x2000008a
+
+0800041c <Send_SMS>:
+
+uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){ //Отправка СМС сообщения на указанный номер
+	a = 0;
+ 800041c:	2200      	movs	r2, #0
+uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){ //Отправка СМС сообщения на указанный номер
+ 800041e:	b573      	push	{r0, r1, r4, r5, r6, lr}
+	responseIndex = 0;
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 8000420:	4b34      	ldr	r3, [pc, #208]	; (80004f4 <Send_SMS+0xd8>)
+	a = 0;
+ 8000422:	4d35      	ldr	r5, [pc, #212]	; (80004f8 <Send_SMS+0xdc>)
+	responseIndex = 0;
+ 8000424:	4c35      	ldr	r4, [pc, #212]	; (80004fc <Send_SMS+0xe0>)
+ 8000426:	4e36      	ldr	r6, [pc, #216]	; (8000500 <Send_SMS+0xe4>)
+uint8_t Send_SMS(volatile uint8_t phoneNum[], volatile uint8_t messageLength){ //Отправка СМС сообщения на указанный номер
+ 8000428:	f88d 1007 	strb.w	r1, [sp, #7]
+	a = 0;
+ 800042c:	702a      	strb	r2, [r5, #0]
+	responseIndex = 0;
+ 800042e:	7022      	strb	r2, [r4, #0]
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 8000430:	701a      	strb	r2, [r3, #0]
+ 8000432:	781a      	ldrb	r2, [r3, #0]
+ 8000434:	2a0b      	cmp	r2, #11
+ 8000436:	d921      	bls.n	800047c <Send_SMS+0x60>
+		sendSMSCommand[i+9] = phoneNum[i];
+	}
+	sendSMSCommand[21] = '\"';
+ 8000438:	2322      	movs	r3, #34	; 0x22
+ 800043a:	7573      	strb	r3, [r6, #21]
+	sendSMSCommand[22] = 0x0D;
+ 800043c:	230d      	movs	r3, #13
+ 800043e:	75b3      	strb	r3, [r6, #22]
+	responseIndex = 0;
+ 8000440:	2300      	movs	r3, #0
+	Send_command_from_uart_to_simcom(sendSMSCommand, 23);//Отправка АТ команды в simcom
+ 8000442:	482f      	ldr	r0, [pc, #188]	; (8000500 <Send_SMS+0xe4>)
+ 8000444:	2117      	movs	r1, #23
+	responseIndex = 0;
+ 8000446:	7023      	strb	r3, [r4, #0]
+	Send_command_from_uart_to_simcom(sendSMSCommand, 23);//Отправка АТ команды в simcom
+ 8000448:	f7ff fece 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	sendSMSCommandResponseDelay = 50;//ожидание отклика команды
+ 800044c:	2232      	movs	r2, #50	; 0x32
+ 800044e:	4b2d      	ldr	r3, [pc, #180]	; (8000504 <Send_SMS+0xe8>)
+	while((a == 0 && sendDelay != 0) || sendSMSCommandResponseDelay != 0){}
+ 8000450:	482d      	ldr	r0, [pc, #180]	; (8000508 <Send_SMS+0xec>)
+	sendSMSCommandResponseDelay = 50;//ожидание отклика команды
+ 8000452:	701a      	strb	r2, [r3, #0]
+	while((a == 0 && sendDelay != 0) || sendSMSCommandResponseDelay != 0){}
+ 8000454:	782a      	ldrb	r2, [r5, #0]
+ 8000456:	b912      	cbnz	r2, 800045e <Send_SMS+0x42>
+ 8000458:	7802      	ldrb	r2, [r0, #0]
+ 800045a:	2a00      	cmp	r2, #0
+ 800045c:	d1fa      	bne.n	8000454 <Send_SMS+0x38>
+ 800045e:	781a      	ldrb	r2, [r3, #0]
+ 8000460:	f002 01ff 	and.w	r1, r2, #255	; 0xff
+ 8000464:	2a00      	cmp	r2, #0
+ 8000466:	d1f5      	bne.n	8000454 <Send_SMS+0x38>
+	if (a == 0){//В случае отсутствия отклика отправить сообщение об ошибке, выйти из функции
+ 8000468:	782b      	ldrb	r3, [r5, #0]
+ 800046a:	b99b      	cbnz	r3, 8000494 <Send_SMS+0x78>
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 800046c:	4b27      	ldr	r3, [pc, #156]	; (800050c <Send_SMS+0xf0>)
+ 800046e:	881a      	ldrh	r2, [r3, #0]
+ 8000470:	0610      	lsls	r0, r2, #24
+ 8000472:	d5fc      	bpl.n	800046e <Send_SMS+0x52>
+		}
+		x++;
+	}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+	USART2->DR = 'E';// При отсутствии символа начала текста сообщения вывести сообщение ошибки
+ 8000474:	2245      	movs	r2, #69	; 0x45
+	return 0;
+ 8000476:	2000      	movs	r0, #0
+	USART2->DR = 'E';// При отсутствии символа начала текста сообщения вывести сообщение ошибки
+ 8000478:	809a      	strh	r2, [r3, #4]
+	return 0;
+ 800047a:	e02f      	b.n	80004dc <Send_SMS+0xc0>
+		sendSMSCommand[i+9] = phoneNum[i];
+ 800047c:	781a      	ldrb	r2, [r3, #0]
+ 800047e:	7819      	ldrb	r1, [r3, #0]
+ 8000480:	3209      	adds	r2, #9
+ 8000482:	b2c9      	uxtb	r1, r1
+ 8000484:	5c41      	ldrb	r1, [r0, r1]
+ 8000486:	b2c9      	uxtb	r1, r1
+ 8000488:	54b1      	strb	r1, [r6, r2]
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 800048a:	781a      	ldrb	r2, [r3, #0]
+ 800048c:	3201      	adds	r2, #1
+ 800048e:	b2d2      	uxtb	r2, r2
+ 8000490:	701a      	strb	r2, [r3, #0]
+ 8000492:	e7ce      	b.n	8000432 <Send_SMS+0x16>
+	x = 0;
+ 8000494:	4b1e      	ldr	r3, [pc, #120]	; (8000510 <Send_SMS+0xf4>)
+		while(responseBuffer[x] == 62){//Поиск символа '>' в ответе от simcom , символ '>' служит указателем начала текста СМС сообщения
+ 8000496:	481f      	ldr	r0, [pc, #124]	; (8000514 <Send_SMS+0xf8>)
+	x = 0;
+ 8000498:	7019      	strb	r1, [r3, #0]
+	while(x < responseIndex){
+ 800049a:	7819      	ldrb	r1, [r3, #0]
+ 800049c:	7822      	ldrb	r2, [r4, #0]
+ 800049e:	4291      	cmp	r1, r2
+ 80004a0:	d31e      	bcc.n	80004e0 <Send_SMS+0xc4>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
+ 80004a2:	7821      	ldrb	r1, [r4, #0]
+ 80004a4:	481b      	ldr	r0, [pc, #108]	; (8000514 <Send_SMS+0xf8>)
+ 80004a6:	f7ff fe77 	bl	8000198 <Send_command_from_simcom_to_uart>
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 80004aa:	4b18      	ldr	r3, [pc, #96]	; (800050c <Send_SMS+0xf0>)
+ 80004ac:	881a      	ldrh	r2, [r3, #0]
+ 80004ae:	0612      	lsls	r2, r2, #24
+ 80004b0:	d5fc      	bpl.n	80004ac <Send_SMS+0x90>
+ 80004b2:	e7df      	b.n	8000474 <Send_SMS+0x58>
+			Send_command_from_uart_to_simcom(message, messageLength);//Отправка в simcom текста сообщения
+ 80004b4:	f89d 1007 	ldrb.w	r1, [sp, #7]
+ 80004b8:	4817      	ldr	r0, [pc, #92]	; (8000518 <Send_SMS+0xfc>)
+ 80004ba:	f7ff fe95 	bl	80001e8 <Send_command_from_uart_to_simcom>
+			delay_ms(5000);
+ 80004be:	f241 3088 	movw	r0, #5000	; 0x1388
+ 80004c2:	f7ff fe57 	bl	8000174 <delay_ms>
+			USART1->DR = 0x1A;//Отправка СМС сообщения адресату
+ 80004c6:	221a      	movs	r2, #26
+ 80004c8:	4b14      	ldr	r3, [pc, #80]	; (800051c <Send_SMS+0x100>)
+ 80004ca:	809a      	strh	r2, [r3, #4]
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 80004cc:	f5a3 4374 	sub.w	r3, r3, #62464	; 0xf400
+ 80004d0:	881a      	ldrh	r2, [r3, #0]
+ 80004d2:	0611      	lsls	r1, r2, #24
+ 80004d4:	d5fc      	bpl.n	80004d0 <Send_SMS+0xb4>
+			USART2->DR = 'S';//Сообщение об отправке СМС сообщения
+ 80004d6:	2253      	movs	r2, #83	; 0x53
+			return 1;
+ 80004d8:	2001      	movs	r0, #1
+			USART2->DR = 'S';//Сообщение об отправке СМС сообщения
+ 80004da:	809a      	strh	r2, [r3, #4]
+	
+}
+ 80004dc:	b002      	add	sp, #8
+ 80004de:	bd70      	pop	{r4, r5, r6, pc}
+		while(responseBuffer[x] == 62){//Поиск символа '>' в ответе от simcom , символ '>' служит указателем начала текста СМС сообщения
+ 80004e0:	781a      	ldrb	r2, [r3, #0]
+ 80004e2:	b2d2      	uxtb	r2, r2
+ 80004e4:	5c82      	ldrb	r2, [r0, r2]
+ 80004e6:	2a3e      	cmp	r2, #62	; 0x3e
+ 80004e8:	d0e4      	beq.n	80004b4 <Send_SMS+0x98>
+		x++;
+ 80004ea:	781a      	ldrb	r2, [r3, #0]
+ 80004ec:	3201      	adds	r2, #1
+ 80004ee:	b2d2      	uxtb	r2, r2
+ 80004f0:	701a      	strb	r2, [r3, #0]
+ 80004f2:	e7d2      	b.n	800049a <Send_SMS+0x7e>
+ 80004f4:	200000e2 	.word	0x200000e2
+ 80004f8:	200000de 	.word	0x200000de
+ 80004fc:	200000e8 	.word	0x200000e8
+ 8000500:	2000009e 	.word	0x2000009e
+ 8000504:	200000ea 	.word	0x200000ea
+ 8000508:	200000e9 	.word	0x200000e9
+ 800050c:	40004400 	.word	0x40004400
+ 8000510:	200000ec 	.word	0x200000ec
+ 8000514:	2000038c 	.word	0x2000038c
+ 8000518:	200002e2 	.word	0x200002e2
+ 800051c:	40013800 	.word	0x40013800
+
+08000520 <TCP_IP_Connect>:
+	
+	return 0;
+}
+
+
+void TCP_IP_Connect(volatile uint8_t ip[], volatile uint8_t ipLenght, volatile uint8_t port[], volatile uint8_t portLength){//Функция подключения по TCP/IP
+ 8000520:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 8000522:	f88d 1007 	strb.w	r1, [sp, #7]
+ 8000526:	f88d 3006 	strb.w	r3, [sp, #6]
+	// Send_command_from_uart_to_simcom(startSocketServiceCommand, 11);//Дублирование отправки команды открытися службы сокетов
+	// delay_ms(10000);
+	// Send_command_from_simcom_to_uart(responseBuffer, responseIndex);
+	a = 0;
+ 800052a:	2300      	movs	r3, #0
+ 800052c:	4923      	ldr	r1, [pc, #140]	; (80005bc <TCP_IP_Connect+0x9c>)
+	uint8_t x = 20;
+	responseIndex = 0;
+ 800052e:	4d24      	ldr	r5, [pc, #144]	; (80005c0 <TCP_IP_Connect+0xa0>)
+	for(i = 0; i < ipLenght; i++, x++){//запись полученного IP в АТ команду
+ 8000530:	4c24      	ldr	r4, [pc, #144]	; (80005c4 <TCP_IP_Connect+0xa4>)
+	a = 0;
+ 8000532:	700b      	strb	r3, [r1, #0]
+	responseIndex = 0;
+ 8000534:	702b      	strb	r3, [r5, #0]
+	for(i = 0; i < ipLenght; i++, x++){//запись полученного IP в АТ команду
+ 8000536:	7023      	strb	r3, [r4, #0]
+	uint8_t x = 20;
+ 8000538:	2314      	movs	r3, #20
+ 800053a:	4e23      	ldr	r6, [pc, #140]	; (80005c8 <TCP_IP_Connect+0xa8>)
+	for(i = 0; i < ipLenght; i++, x++){//запись полученного IP в АТ команду
+ 800053c:	7827      	ldrb	r7, [r4, #0]
+ 800053e:	f89d 1007 	ldrb.w	r1, [sp, #7]
+ 8000542:	428f      	cmp	r7, r1
+ 8000544:	f103 0101 	add.w	r1, r3, #1
+ 8000548:	d322      	bcc.n	8000590 <TCP_IP_Connect+0x70>
+		TCPConnectCommand[x] = ip[i];
+	}
+	
+	TCPConnectCommand[x] = '\"';
+ 800054a:	2022      	movs	r0, #34	; 0x22
+ 800054c:	54f0      	strb	r0, [r6, r3]
+	x++;
+	TCPConnectCommand[x] = ',';
+ 800054e:	202c      	movs	r0, #44	; 0x2c
+ 8000550:	b2c9      	uxtb	r1, r1
+ 8000552:	5470      	strb	r0, [r6, r1]
+	x++;
+	
+	for(i = 0; i < portLength; i++, x++){//Запись порта в АТ команду
+ 8000554:	2100      	movs	r1, #0
+	x++;
+ 8000556:	3302      	adds	r3, #2
+ 8000558:	b2db      	uxtb	r3, r3
+	for(i = 0; i < portLength; i++, x++){//Запись порта в АТ команду
+ 800055a:	7021      	strb	r1, [r4, #0]
+ 800055c:	7820      	ldrb	r0, [r4, #0]
+ 800055e:	f89d 1006 	ldrb.w	r1, [sp, #6]
+ 8000562:	4288      	cmp	r0, r1
+ 8000564:	f103 0101 	add.w	r1, r3, #1
+ 8000568:	d31d      	bcc.n	80005a6 <TCP_IP_Connect+0x86>
+		TCPConnectCommand[x] = port[i];
+	}
+	
+	TCPConnectCommand[x] = 0x0D;//завершение АТ команды, символ CR
+ 800056a:	220d      	movs	r2, #13
+ 800056c:	54f2      	strb	r2, [r6, r3]
+	responseIndex = 0;
+ 800056e:	2300      	movs	r3, #0
+	Send_command_from_uart_to_simcom(TCPConnectCommand, x + 1);//Отправка АТ комманды на simcom
+ 8000570:	b2c9      	uxtb	r1, r1
+ 8000572:	4815      	ldr	r0, [pc, #84]	; (80005c8 <TCP_IP_Connect+0xa8>)
+	responseIndex = 0;
+ 8000574:	702b      	strb	r3, [r5, #0]
+	Send_command_from_uart_to_simcom(TCPConnectCommand, x + 1);//Отправка АТ комманды на simcom
+ 8000576:	f7ff fe37 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	delay_ms(10000);//Ожидание ответа от simcom
+ 800057a:	f242 7010 	movw	r0, #10000	; 0x2710
+ 800057e:	f7ff fdf9 	bl	8000174 <delay_ms>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Отправка ответа на МК
+ 8000582:	7829      	ldrb	r1, [r5, #0]
+ 8000584:	4811      	ldr	r0, [pc, #68]	; (80005cc <TCP_IP_Connect+0xac>)
+}
+ 8000586:	b003      	add	sp, #12
+ 8000588:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Отправка ответа на МК
+ 800058c:	f7ff be04 	b.w	8000198 <Send_command_from_simcom_to_uart>
+		TCPConnectCommand[x] = ip[i];
+ 8000590:	7827      	ldrb	r7, [r4, #0]
+ 8000592:	b2ff      	uxtb	r7, r7
+ 8000594:	5dc7      	ldrb	r7, [r0, r7]
+ 8000596:	b2ff      	uxtb	r7, r7
+ 8000598:	54f7      	strb	r7, [r6, r3]
+	for(i = 0; i < ipLenght; i++, x++){//запись полученного IP в АТ команду
+ 800059a:	7823      	ldrb	r3, [r4, #0]
+ 800059c:	3301      	adds	r3, #1
+ 800059e:	b2db      	uxtb	r3, r3
+ 80005a0:	7023      	strb	r3, [r4, #0]
+ 80005a2:	b2cb      	uxtb	r3, r1
+ 80005a4:	e7ca      	b.n	800053c <TCP_IP_Connect+0x1c>
+		TCPConnectCommand[x] = port[i];
+ 80005a6:	7820      	ldrb	r0, [r4, #0]
+ 80005a8:	b2c0      	uxtb	r0, r0
+ 80005aa:	5c10      	ldrb	r0, [r2, r0]
+ 80005ac:	b2c0      	uxtb	r0, r0
+ 80005ae:	54f0      	strb	r0, [r6, r3]
+	for(i = 0; i < portLength; i++, x++){//Запись порта в АТ команду
+ 80005b0:	7823      	ldrb	r3, [r4, #0]
+ 80005b2:	3301      	adds	r3, #1
+ 80005b4:	b2db      	uxtb	r3, r3
+ 80005b6:	7023      	strb	r3, [r4, #0]
+ 80005b8:	b2cb      	uxtb	r3, r1
+ 80005ba:	e7cf      	b.n	800055c <TCP_IP_Connect+0x3c>
+ 80005bc:	200000de 	.word	0x200000de
+ 80005c0:	200000e8 	.word	0x200000e8
+ 80005c4:	200000e2 	.word	0x200000e2
+ 80005c8:	20000028 	.word	0x20000028
+ 80005cc:	2000038c 	.word	0x2000038c
+
+080005d0 <Send_TCP>:
+
+void Send_TCP(volatile uint8_t ip[], volatile uint8_t ipLenght, volatile uint8_t port[], volatile uint8_t portLength, volatile uint8_t messageLength){//Функция отправки данных по TCP/IP
+ 80005d0:	b537      	push	{r0, r1, r2, r4, r5, lr}
+ 80005d2:	f88d 1007 	strb.w	r1, [sp, #7]
+ 80005d6:	f88d 3006 	strb.w	r3, [sp, #6]
+	TCP_IP_Connect(ip, ipLenght, port, portLength);//Вызов функции подключения по TCP
+ 80005da:	f89d 1007 	ldrb.w	r1, [sp, #7]
+ 80005de:	f89d 3006 	ldrb.w	r3, [sp, #6]
+ 80005e2:	f7ff ff9d 	bl	8000520 <TCP_IP_Connect>
+	Send_command_from_uart_to_simcom(sendTCPMessageCommand, 13);//Отправка АТ команды для отправки данных по TCP в simcom
+ 80005e6:	210d      	movs	r1, #13
+ 80005e8:	482e      	ldr	r0, [pc, #184]	; (80006a4 <Send_TCP+0xd4>)
+ 80005ea:	f7ff fdfd 	bl	80001e8 <Send_command_from_uart_to_simcom>
+	a = 0;
+ 80005ee:	2100      	movs	r1, #0
+	responseIndex = 0;
+	sendTCPCommandResponseDelay = 10;
+ 80005f0:	200a      	movs	r0, #10
+	a = 0;
+ 80005f2:	4b2d      	ldr	r3, [pc, #180]	; (80006a8 <Send_TCP+0xd8>)
+	responseIndex = 0;
+ 80005f4:	4a2d      	ldr	r2, [pc, #180]	; (80006ac <Send_TCP+0xdc>)
+	a = 0;
+ 80005f6:	7019      	strb	r1, [r3, #0]
+	responseIndex = 0;
+ 80005f8:	7011      	strb	r1, [r2, #0]
+	sendTCPCommandResponseDelay = 10;
+ 80005fa:	492d      	ldr	r1, [pc, #180]	; (80006b0 <Send_TCP+0xe0>)
+	while((a == 0 && sendDelay != 0) || sendTCPCommandResponseDelay != 0){}//Ожидание ответа от simcom о готовности к отправки данных по TCP 
+ 80005fc:	4d2d      	ldr	r5, [pc, #180]	; (80006b4 <Send_TCP+0xe4>)
+	sendTCPCommandResponseDelay = 10;
+ 80005fe:	7008      	strb	r0, [r1, #0]
+	while((a == 0 && sendDelay != 0) || sendTCPCommandResponseDelay != 0){}//Ожидание ответа от simcom о готовности к отправки данных по TCP 
+ 8000600:	7818      	ldrb	r0, [r3, #0]
+ 8000602:	b910      	cbnz	r0, 800060a <Send_TCP+0x3a>
+ 8000604:	7828      	ldrb	r0, [r5, #0]
+ 8000606:	2800      	cmp	r0, #0
+ 8000608:	d1fa      	bne.n	8000600 <Send_TCP+0x30>
+ 800060a:	7808      	ldrb	r0, [r1, #0]
+ 800060c:	f000 04ff 	and.w	r4, r0, #255	; 0xff
+ 8000610:	2800      	cmp	r0, #0
+ 8000612:	d1f5      	bne.n	8000600 <Send_TCP+0x30>
+	if (a == 0){//В случае отсутствия ответа возвращает сообщение об ошибке, и выходит из функции
+ 8000614:	781b      	ldrb	r3, [r3, #0]
+ 8000616:	b96b      	cbnz	r3, 8000634 <Send_TCP+0x64>
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000618:	4b27      	ldr	r3, [pc, #156]	; (80006b8 <Send_TCP+0xe8>)
+ 800061a:	461a      	mov	r2, r3
+ 800061c:	8819      	ldrh	r1, [r3, #0]
+ 800061e:	0609      	lsls	r1, r1, #24
+ 8000620:	d5fc      	bpl.n	800061c <Send_TCP+0x4c>
+		USART2->DR = 'E';
+ 8000622:	2145      	movs	r1, #69	; 0x45
+ 8000624:	8099      	strh	r1, [r3, #4]
+		while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000626:	8813      	ldrh	r3, [r2, #0]
+ 8000628:	061d      	lsls	r5, r3, #24
+ 800062a:	d5fc      	bpl.n	8000626 <Send_TCP+0x56>
+	}
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//отправка в МК ответа от simcom
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+	USART2->DR = 'E';//Сообщениеоб ошибке отправки данных
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+	USART2->DR = 0x0D;
+ 800062c:	230d      	movs	r3, #13
+ 800062e:	8093      	strh	r3, [r2, #4]
+	return;
+	
+	
+	
+}
+ 8000630:	b003      	add	sp, #12
+ 8000632:	bd30      	pop	{r4, r5, pc}
+	x = 0;
+ 8000634:	4b21      	ldr	r3, [pc, #132]	; (80006bc <Send_TCP+0xec>)
+ 8000636:	701c      	strb	r4, [r3, #0]
+		while(responseBuffer[x] == 62){//Поиск символа ">" в ответе
+ 8000638:	4c21      	ldr	r4, [pc, #132]	; (80006c0 <Send_TCP+0xf0>)
+	while(x < responseIndex){
+ 800063a:	7818      	ldrb	r0, [r3, #0]
+ 800063c:	7811      	ldrb	r1, [r2, #0]
+ 800063e:	4288      	cmp	r0, r1
+ 8000640:	d326      	bcc.n	8000690 <Send_TCP+0xc0>
+	Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//отправка в МК ответа от simcom
+ 8000642:	7811      	ldrb	r1, [r2, #0]
+ 8000644:	481e      	ldr	r0, [pc, #120]	; (80006c0 <Send_TCP+0xf0>)
+ 8000646:	f7ff fda7 	bl	8000198 <Send_command_from_simcom_to_uart>
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 800064a:	4b1b      	ldr	r3, [pc, #108]	; (80006b8 <Send_TCP+0xe8>)
+ 800064c:	461a      	mov	r2, r3
+ 800064e:	8819      	ldrh	r1, [r3, #0]
+ 8000650:	0609      	lsls	r1, r1, #24
+ 8000652:	d5fc      	bpl.n	800064e <Send_TCP+0x7e>
+	USART2->DR = 'E';//Сообщениеоб ошибке отправки данных
+ 8000654:	2145      	movs	r1, #69	; 0x45
+ 8000656:	8099      	strh	r1, [r3, #4]
+	while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000658:	8813      	ldrh	r3, [r2, #0]
+ 800065a:	061b      	lsls	r3, r3, #24
+ 800065c:	d5fc      	bpl.n	8000658 <Send_TCP+0x88>
+ 800065e:	e7e5      	b.n	800062c <Send_TCP+0x5c>
+			Send_command_from_uart_to_simcom(message, messageLength);//Отправка в simcom данных для отправки по TCP 
+ 8000660:	f89d 1018 	ldrb.w	r1, [sp, #24]
+ 8000664:	4817      	ldr	r0, [pc, #92]	; (80006c4 <Send_TCP+0xf4>)
+ 8000666:	f7ff fdbf 	bl	80001e8 <Send_command_from_uart_to_simcom>
+			delay_ms(5000);
+ 800066a:	f241 3088 	movw	r0, #5000	; 0x1388
+ 800066e:	f7ff fd81 	bl	8000174 <delay_ms>
+			USART1->DR = 0x1A;//Завершение ввода данных и отправка данных на указанный адрес
+ 8000672:	221a      	movs	r2, #26
+ 8000674:	4b14      	ldr	r3, [pc, #80]	; (80006c8 <Send_TCP+0xf8>)
+ 8000676:	809a      	strh	r2, [r3, #4]
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000678:	f5a3 4374 	sub.w	r3, r3, #62464	; 0xf400
+ 800067c:	461a      	mov	r2, r3
+ 800067e:	8819      	ldrh	r1, [r3, #0]
+ 8000680:	060c      	lsls	r4, r1, #24
+ 8000682:	d5fc      	bpl.n	800067e <Send_TCP+0xae>
+			USART2->DR = 'S';//сообщение об успешной отправке
+ 8000684:	2153      	movs	r1, #83	; 0x53
+ 8000686:	8099      	strh	r1, [r3, #4]
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000688:	8813      	ldrh	r3, [r2, #0]
+ 800068a:	0618      	lsls	r0, r3, #24
+ 800068c:	d5fc      	bpl.n	8000688 <Send_TCP+0xb8>
+ 800068e:	e7cd      	b.n	800062c <Send_TCP+0x5c>
+		while(responseBuffer[x] == 62){//Поиск символа ">" в ответе
+ 8000690:	7819      	ldrb	r1, [r3, #0]
+ 8000692:	b2c9      	uxtb	r1, r1
+ 8000694:	5c61      	ldrb	r1, [r4, r1]
+ 8000696:	293e      	cmp	r1, #62	; 0x3e
+ 8000698:	d0e2      	beq.n	8000660 <Send_TCP+0x90>
+		x++;
+ 800069a:	7819      	ldrb	r1, [r3, #0]
+ 800069c:	3101      	adds	r1, #1
+ 800069e:	b2c9      	uxtb	r1, r1
+ 80006a0:	7019      	strb	r1, [r3, #0]
+ 80006a2:	e7ca      	b.n	800063a <Send_TCP+0x6a>
+ 80006a4:	200000b5 	.word	0x200000b5
+ 80006a8:	200000de 	.word	0x200000de
+ 80006ac:	200000e8 	.word	0x200000e8
+ 80006b0:	200000eb 	.word	0x200000eb
+ 80006b4:	200000e9 	.word	0x200000e9
+ 80006b8:	40004400 	.word	0x40004400
+ 80006bc:	200000ec 	.word	0x200000ec
+ 80006c0:	2000038c 	.word	0x2000038c
+ 80006c4:	200002e2 	.word	0x200002e2
+ 80006c8:	40013800 	.word	0x40013800
+
+080006cc <VoiceCall>:
+
+void VoiceCall(volatile uint8_t phoneNum[]){ //Голосовой вызов на указанный номер
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 80006cc:	2200      	movs	r2, #0
+ 80006ce:	4b0e      	ldr	r3, [pc, #56]	; (8000708 <VoiceCall+0x3c>)
+ 80006d0:	490e      	ldr	r1, [pc, #56]	; (800070c <VoiceCall+0x40>)
+void VoiceCall(volatile uint8_t phoneNum[]){ //Голосовой вызов на указанный номер
+ 80006d2:	b410      	push	{r4}
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 80006d4:	701a      	strb	r2, [r3, #0]
+ 80006d6:	781a      	ldrb	r2, [r3, #0]
+ 80006d8:	2a0b      	cmp	r2, #11
+ 80006da:	d908      	bls.n	80006ee <VoiceCall+0x22>
+		callCommand[i+3] = phoneNum[i];
+	}
+	callCommand[15] = ';';
+ 80006dc:	233b      	movs	r3, #59	; 0x3b
+ 80006de:	73cb      	strb	r3, [r1, #15]
+	callCommand[16] = 0x0D;
+ 80006e0:	230d      	movs	r3, #13
+ 80006e2:	740b      	strb	r3, [r1, #16]
+	Send_command_from_uart_to_simcom(callCommand, 17);//Отправка АТ команды в simcom
+ 80006e4:	4809      	ldr	r0, [pc, #36]	; (800070c <VoiceCall+0x40>)
+ 80006e6:	2111      	movs	r1, #17
+}
+ 80006e8:	bc10      	pop	{r4}
+	Send_command_from_uart_to_simcom(callCommand, 17);//Отправка АТ команды в simcom
+ 80006ea:	f7ff bd7d 	b.w	80001e8 <Send_command_from_uart_to_simcom>
+		callCommand[i+3] = phoneNum[i];
+ 80006ee:	781a      	ldrb	r2, [r3, #0]
+ 80006f0:	781c      	ldrb	r4, [r3, #0]
+ 80006f2:	3203      	adds	r2, #3
+ 80006f4:	b2e4      	uxtb	r4, r4
+ 80006f6:	5d04      	ldrb	r4, [r0, r4]
+ 80006f8:	b2e4      	uxtb	r4, r4
+ 80006fa:	548c      	strb	r4, [r1, r2]
+	for(i = 0; i < 12; i++){//Добавление номера телефона к АТ к команде 
+ 80006fc:	781a      	ldrb	r2, [r3, #0]
+ 80006fe:	3201      	adds	r2, #1
+ 8000700:	b2d2      	uxtb	r2, r2
+ 8000702:	701a      	strb	r2, [r3, #0]
+ 8000704:	e7e7      	b.n	80006d6 <VoiceCall+0xa>
+ 8000706:	bf00      	nop
+ 8000708:	200000e2 	.word	0x200000e2
+ 800070c:	20000067 	.word	0x20000067
+
+08000710 <SIMCardSwitch>:
+
+void SIMCardSwitch(volatile uint8_t simNum){ //Смена основной сим карты.
+	SIMCardSwitchCommand[13] = simNum;//Добавление номера слота сим карты к AT команде 
+	Send_command_from_uart_to_simcom(SIMCardSwitchCommand, 15);//Отправка АТ команды в simcom
+ 8000710:	210f      	movs	r1, #15
+void SIMCardSwitch(volatile uint8_t simNum){ //Смена основной сим карты.
+ 8000712:	b082      	sub	sp, #8
+ 8000714:	f88d 0007 	strb.w	r0, [sp, #7]
+	SIMCardSwitchCommand[13] = simNum;//Добавление номера слота сим карты к AT команде 
+ 8000718:	f89d 3007 	ldrb.w	r3, [sp, #7]
+ 800071c:	4802      	ldr	r0, [pc, #8]	; (8000728 <SIMCardSwitch+0x18>)
+ 800071e:	b2db      	uxtb	r3, r3
+ 8000720:	7343      	strb	r3, [r0, #13]
+}
+ 8000722:	b002      	add	sp, #8
+	Send_command_from_uart_to_simcom(SIMCardSwitchCommand, 15);//Отправка АТ команды в simcom
+ 8000724:	f7ff bd60 	b.w	80001e8 <Send_command_from_uart_to_simcom>
+ 8000728:	20000000 	.word	0x20000000
+
+0800072c <Command_check>:
+	i = 0;
+ 800072c:	2200      	movs	r2, #0
+uint8_t Command_check(volatile uint8_t command[], volatile uint8_t commandSize){// Проверка пользовательских команд
+ 800072e:	b530      	push	{r4, r5, lr}
+	i = 0;
+ 8000730:	4b9b      	ldr	r3, [pc, #620]	; (80009a0 <Command_check+0x274>)
+uint8_t Command_check(volatile uint8_t command[], volatile uint8_t commandSize){// Проверка пользовательских команд
+ 8000732:	b093      	sub	sp, #76	; 0x4c
+ 8000734:	f88d 100f 	strb.w	r1, [sp, #15]
+	while((command[i] == SMSCommandReference[i]) && (i < 3)){//Пользовательская команда для отправки СМС сообщения 
+ 8000738:	499a      	ldr	r1, [pc, #616]	; (80009a4 <Command_check+0x278>)
+	i = 0;
+ 800073a:	701a      	strb	r2, [r3, #0]
+	while((command[i] == SMSCommandReference[i]) && (i < 3)){//Пользовательская команда для отправки СМС сообщения 
+ 800073c:	781a      	ldrb	r2, [r3, #0]
+ 800073e:	b2d2      	uxtb	r2, r2
+ 8000740:	5c84      	ldrb	r4, [r0, r2]
+ 8000742:	781a      	ldrb	r2, [r3, #0]
+ 8000744:	b2d2      	uxtb	r2, r2
+ 8000746:	5c8a      	ldrb	r2, [r1, r2]
+ 8000748:	4294      	cmp	r4, r2
+ 800074a:	d102      	bne.n	8000752 <Command_check+0x26>
+ 800074c:	781a      	ldrb	r2, [r3, #0]
+ 800074e:	2a02      	cmp	r2, #2
+ 8000750:	d929      	bls.n	80007a6 <Command_check+0x7a>
+	i = 0;
+ 8000752:	2200      	movs	r2, #0
+	while((command[i] == TCPCommandReference[i]) && (i < 3)){//Пользовательская команда для отправки данных по TCP/IP
+ 8000754:	4994      	ldr	r1, [pc, #592]	; (80009a8 <Command_check+0x27c>)
+	i = 0;
+ 8000756:	701a      	strb	r2, [r3, #0]
+	while((command[i] == TCPCommandReference[i]) && (i < 3)){//Пользовательская команда для отправки данных по TCP/IP
+ 8000758:	781a      	ldrb	r2, [r3, #0]
+ 800075a:	b2d2      	uxtb	r2, r2
+ 800075c:	5c84      	ldrb	r4, [r0, r2]
+ 800075e:	781a      	ldrb	r2, [r3, #0]
+ 8000760:	b2d2      	uxtb	r2, r2
+ 8000762:	5c8a      	ldrb	r2, [r1, r2]
+ 8000764:	4294      	cmp	r4, r2
+ 8000766:	d102      	bne.n	800076e <Command_check+0x42>
+ 8000768:	781a      	ldrb	r2, [r3, #0]
+ 800076a:	2a02      	cmp	r2, #2
+ 800076c:	d97e      	bls.n	800086c <Command_check+0x140>
+	while((command[i] == callCommandReference[i]) && (i < 4)){//Пользовательская команда звонка на указанный номер
+ 800076e:	498f      	ldr	r1, [pc, #572]	; (80009ac <Command_check+0x280>)
+ 8000770:	781a      	ldrb	r2, [r3, #0]
+ 8000772:	b2d2      	uxtb	r2, r2
+ 8000774:	5c84      	ldrb	r4, [r0, r2]
+ 8000776:	781a      	ldrb	r2, [r3, #0]
+ 8000778:	b2d2      	uxtb	r2, r2
+ 800077a:	5c8a      	ldrb	r2, [r1, r2]
+ 800077c:	4294      	cmp	r4, r2
+ 800077e:	d103      	bne.n	8000788 <Command_check+0x5c>
+ 8000780:	781a      	ldrb	r2, [r3, #0]
+ 8000782:	2a03      	cmp	r2, #3
+ 8000784:	f240 811e 	bls.w	80009c4 <Command_check+0x298>
+	while((command[i] == SIMCardSwitchReference[i]) && (i < 9)){//Пользовательская комманда выбора основной сим карты
+ 8000788:	4989      	ldr	r1, [pc, #548]	; (80009b0 <Command_check+0x284>)
+ 800078a:	781a      	ldrb	r2, [r3, #0]
+ 800078c:	b2d2      	uxtb	r2, r2
+ 800078e:	5c84      	ldrb	r4, [r0, r2]
+ 8000790:	781a      	ldrb	r2, [r3, #0]
+ 8000792:	b2d2      	uxtb	r2, r2
+ 8000794:	5c8a      	ldrb	r2, [r1, r2]
+ 8000796:	4294      	cmp	r4, r2
+ 8000798:	d103      	bne.n	80007a2 <Command_check+0x76>
+ 800079a:	781a      	ldrb	r2, [r3, #0]
+ 800079c:	2a08      	cmp	r2, #8
+ 800079e:	f240 813e 	bls.w	8000a1e <Command_check+0x2f2>
+	return 0;
+ 80007a2:	2000      	movs	r0, #0
+ 80007a4:	e03c      	b.n	8000820 <Command_check+0xf4>
+		i++;
+ 80007a6:	781a      	ldrb	r2, [r3, #0]
+ 80007a8:	3201      	adds	r2, #1
+ 80007aa:	b2d2      	uxtb	r2, r2
+ 80007ac:	701a      	strb	r2, [r3, #0]
+		if (i == 3){//В случае удачной проверки выполняется отправка СМС сообщения на указанный номер
+ 80007ae:	781a      	ldrb	r2, [r3, #0]
+ 80007b0:	2a03      	cmp	r2, #3
+ 80007b2:	d1c3      	bne.n	800073c <Command_check+0x10>
+			b = 0;
+ 80007b4:	2100      	movs	r1, #0
+ 80007b6:	4a7f      	ldr	r2, [pc, #508]	; (80009b4 <Command_check+0x288>)
+ 80007b8:	7011      	strb	r1, [r2, #0]
+ 80007ba:	b2ca      	uxtb	r2, r1
+			while(command[x] != 'n' && x < commandSize){//поиск начала номера телефона
+ 80007bc:	5c84      	ldrb	r4, [r0, r2]
+ 80007be:	2c6e      	cmp	r4, #110	; 0x6e
+ 80007c0:	d004      	beq.n	80007cc <Command_check+0xa0>
+ 80007c2:	f89d 400f 	ldrb.w	r4, [sp, #15]
+ 80007c6:	3101      	adds	r1, #1
+ 80007c8:	42a2      	cmp	r2, r4
+ 80007ca:	d3f6      	bcc.n	80007ba <Command_check+0x8e>
+			for(i = 0; i <= 12; i++, x++){//Запись номера телефона
+ 80007cc:	2100      	movs	r1, #0
+			x++;
+ 80007ce:	3202      	adds	r2, #2
+ 80007d0:	b2d2      	uxtb	r2, r2
+			for(i = 0; i <= 12; i++, x++){//Запись номера телефона
+ 80007d2:	7019      	strb	r1, [r3, #0]
+ 80007d4:	7819      	ldrb	r1, [r3, #0]
+ 80007d6:	290c      	cmp	r1, #12
+ 80007d8:	d924      	bls.n	8000824 <Command_check+0xf8>
+			while(command[x] != 'm' && x < commandSize){//Поиск начала текста СМС сообщения
+ 80007da:	5c81      	ldrb	r1, [r0, r2]
+ 80007dc:	296d      	cmp	r1, #109	; 0x6d
+ 80007de:	d003      	beq.n	80007e8 <Command_check+0xbc>
+ 80007e0:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 80007e4:	428a      	cmp	r2, r1
+ 80007e6:	d32b      	bcc.n	8000840 <Command_check+0x114>
+			volatile uint8_t SMSLength = commandSize - x;
+ 80007e8:	f89d 100f 	ldrb.w	r1, [sp, #15]
+			x++;
+ 80007ec:	3202      	adds	r2, #2
+ 80007ee:	b2d2      	uxtb	r2, r2
+			volatile uint8_t SMSLength = commandSize - x;
+ 80007f0:	1a89      	subs	r1, r1, r2
+ 80007f2:	b2c9      	uxtb	r1, r1
+ 80007f4:	f88d 1013 	strb.w	r1, [sp, #19]
+			if (SMSLength <= MAX_SMS_LENGTH){//Проверка длинны СМС сообщения
+ 80007f8:	f89d 1013 	ldrb.w	r1, [sp, #19]
+ 80007fc:	29aa      	cmp	r1, #170	; 0xaa
+ 80007fe:	d82e      	bhi.n	800085e <Command_check+0x132>
+				for (i = 0; x < commandSize; i++, x++){//Запись текста СМС сообщения
+ 8000800:	2100      	movs	r1, #0
+					message[i] = command[x];
+ 8000802:	4d6d      	ldr	r5, [pc, #436]	; (80009b8 <Command_check+0x28c>)
+				for (i = 0; x < commandSize; i++, x++){//Запись текста СМС сообщения
+ 8000804:	7019      	strb	r1, [r3, #0]
+ 8000806:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 800080a:	428a      	cmp	r2, r1
+ 800080c:	d31b      	bcc.n	8000846 <Command_check+0x11a>
+				Send_SMS(phone, SMSLength);//Вызов функции отправки СМС сообщения
+ 800080e:	f89d 1013 	ldrb.w	r1, [sp, #19]
+ 8000812:	a808      	add	r0, sp, #32
+ 8000814:	f7ff fe02 	bl	800041c <Send_SMS>
+			commandIndex = 0;
+ 8000818:	2200      	movs	r2, #0
+			return 1;
+ 800081a:	2001      	movs	r0, #1
+			commandIndex = 0;
+ 800081c:	4b67      	ldr	r3, [pc, #412]	; (80009bc <Command_check+0x290>)
+ 800081e:	701a      	strb	r2, [r3, #0]
+}
+ 8000820:	b013      	add	sp, #76	; 0x4c
+ 8000822:	bd30      	pop	{r4, r5, pc}
+				phone[i] = command[x];
+ 8000824:	7819      	ldrb	r1, [r3, #0]
+ 8000826:	5c84      	ldrb	r4, [r0, r2]
+ 8000828:	ad12      	add	r5, sp, #72	; 0x48
+ 800082a:	4429      	add	r1, r5
+ 800082c:	b2e4      	uxtb	r4, r4
+ 800082e:	f801 4c28 	strb.w	r4, [r1, #-40]
+			for(i = 0; i <= 12; i++, x++){//Запись номера телефона
+ 8000832:	7819      	ldrb	r1, [r3, #0]
+ 8000834:	3201      	adds	r2, #1
+ 8000836:	3101      	adds	r1, #1
+ 8000838:	b2c9      	uxtb	r1, r1
+ 800083a:	7019      	strb	r1, [r3, #0]
+ 800083c:	b2d2      	uxtb	r2, r2
+ 800083e:	e7c9      	b.n	80007d4 <Command_check+0xa8>
+				x++;
+ 8000840:	3201      	adds	r2, #1
+ 8000842:	b2d2      	uxtb	r2, r2
+ 8000844:	e7c9      	b.n	80007da <Command_check+0xae>
+					message[i] = command[x];
+ 8000846:	7819      	ldrb	r1, [r3, #0]
+ 8000848:	5c84      	ldrb	r4, [r0, r2]
+ 800084a:	b2c9      	uxtb	r1, r1
+ 800084c:	b2e4      	uxtb	r4, r4
+ 800084e:	546c      	strb	r4, [r5, r1]
+				for (i = 0; x < commandSize; i++, x++){//Запись текста СМС сообщения
+ 8000850:	7819      	ldrb	r1, [r3, #0]
+ 8000852:	3201      	adds	r2, #1
+ 8000854:	3101      	adds	r1, #1
+ 8000856:	b2c9      	uxtb	r1, r1
+ 8000858:	7019      	strb	r1, [r3, #0]
+ 800085a:	b2d2      	uxtb	r2, r2
+ 800085c:	e7d3      	b.n	8000806 <Command_check+0xda>
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 800085e:	4b58      	ldr	r3, [pc, #352]	; (80009c0 <Command_check+0x294>)
+ 8000860:	881a      	ldrh	r2, [r3, #0]
+ 8000862:	0611      	lsls	r1, r2, #24
+ 8000864:	d5fc      	bpl.n	8000860 <Command_check+0x134>
+			USART2->DR = 'E';//При привышении длинны сообщения отправка сообщения об ошибке
+ 8000866:	2245      	movs	r2, #69	; 0x45
+ 8000868:	809a      	strh	r2, [r3, #4]
+ 800086a:	e7d5      	b.n	8000818 <Command_check+0xec>
+		i++;
+ 800086c:	781a      	ldrb	r2, [r3, #0]
+ 800086e:	3201      	adds	r2, #1
+ 8000870:	b2d2      	uxtb	r2, r2
+ 8000872:	701a      	strb	r2, [r3, #0]
+		if (i == 3){//В случае удачной проверки выполняется отправка данных на указанный адрес
+ 8000874:	781a      	ldrb	r2, [r3, #0]
+ 8000876:	2a03      	cmp	r2, #3
+ 8000878:	f47f af6e 	bne.w	8000758 <Command_check+0x2c>
+			b = 0;
+ 800087c:	2200      	movs	r2, #0
+ 800087e:	494d      	ldr	r1, [pc, #308]	; (80009b4 <Command_check+0x288>)
+ 8000880:	700a      	strb	r2, [r1, #0]
+			volatile uint8_t ipLenght = 0;//Хранит длинну ip адреса 
+ 8000882:	f88d 2014 	strb.w	r2, [sp, #20]
+			volatile uint8_t portLength = 0;//Хранит длинну порта адреса
+ 8000886:	f88d 2015 	strb.w	r2, [sp, #21]
+ 800088a:	b2d1      	uxtb	r1, r2
+			while(command[x] != 'i' && x < commandSize){//Поиск начала ip адреса
+ 800088c:	5c44      	ldrb	r4, [r0, r1]
+ 800088e:	2c69      	cmp	r4, #105	; 0x69
+ 8000890:	d004      	beq.n	800089c <Command_check+0x170>
+ 8000892:	f89d 400f 	ldrb.w	r4, [sp, #15]
+ 8000896:	3201      	adds	r2, #1
+ 8000898:	42a1      	cmp	r1, r4
+ 800089a:	d3f6      	bcc.n	800088a <Command_check+0x15e>
+			x++;
+ 800089c:	1cca      	adds	r2, r1, #3
+			for(i = 0; command[x] != ',' && i < 15; i++, x++, ipLenght++){//Запись ip адреса
+ 800089e:	2100      	movs	r1, #0
+			x++;
+ 80008a0:	b2d2      	uxtb	r2, r2
+			for(i = 0; command[x] != ',' && i < 15; i++, x++, ipLenght++){//Запись ip адреса
+ 80008a2:	7019      	strb	r1, [r3, #0]
+ 80008a4:	5c81      	ldrb	r1, [r0, r2]
+ 80008a6:	1884      	adds	r4, r0, r2
+ 80008a8:	292c      	cmp	r1, #44	; 0x2c
+ 80008aa:	d002      	beq.n	80008b2 <Command_check+0x186>
+ 80008ac:	7819      	ldrb	r1, [r3, #0]
+ 80008ae:	290e      	cmp	r1, #14
+ 80008b0:	d937      	bls.n	8000922 <Command_check+0x1f6>
+			while(command[x] != 'p' && x < commandSize){//Поиск начала порта
+ 80008b2:	5c81      	ldrb	r1, [r0, r2]
+ 80008b4:	2970      	cmp	r1, #112	; 0x70
+ 80008b6:	d003      	beq.n	80008c0 <Command_check+0x194>
+ 80008b8:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 80008bc:	428a      	cmp	r2, r1
+ 80008be:	d344      	bcc.n	800094a <Command_check+0x21e>
+			for(i = 0; command[x] != ',' && i < 5; i++, x++, portLength++){//Зпись порта 
+ 80008c0:	2100      	movs	r1, #0
+			x++;
+ 80008c2:	3202      	adds	r2, #2
+ 80008c4:	b2d2      	uxtb	r2, r2
+			for(i = 0; command[x] != ',' && i < 5; i++, x++, portLength++){//Зпись порта 
+ 80008c6:	7019      	strb	r1, [r3, #0]
+ 80008c8:	5c81      	ldrb	r1, [r0, r2]
+ 80008ca:	1884      	adds	r4, r0, r2
+ 80008cc:	292c      	cmp	r1, #44	; 0x2c
+ 80008ce:	d002      	beq.n	80008d6 <Command_check+0x1aa>
+ 80008d0:	7819      	ldrb	r1, [r3, #0]
+ 80008d2:	2904      	cmp	r1, #4
+ 80008d4:	d93c      	bls.n	8000950 <Command_check+0x224>
+			while(command[x] != 'm' && x < commandSize){//Поиск начала сообщения 
+ 80008d6:	5c81      	ldrb	r1, [r0, r2]
+ 80008d8:	296d      	cmp	r1, #109	; 0x6d
+ 80008da:	d003      	beq.n	80008e4 <Command_check+0x1b8>
+ 80008dc:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 80008e0:	428a      	cmp	r2, r1
+ 80008e2:	d349      	bcc.n	8000978 <Command_check+0x24c>
+			volatile uint8_t SMSLength = commandSize - x;
+ 80008e4:	f89d 100f 	ldrb.w	r1, [sp, #15]
+			x++;
+ 80008e8:	3202      	adds	r2, #2
+ 80008ea:	b2d2      	uxtb	r2, r2
+			volatile uint8_t SMSLength = commandSize - x;
+ 80008ec:	1a89      	subs	r1, r1, r2
+ 80008ee:	b2c9      	uxtb	r1, r1
+ 80008f0:	f88d 1016 	strb.w	r1, [sp, #22]
+			if (SMSLength <= MAX_SMS_LENGTH){//Проверка длинны сообщения
+ 80008f4:	f89d 1016 	ldrb.w	r1, [sp, #22]
+ 80008f8:	29aa      	cmp	r1, #170	; 0xaa
+ 80008fa:	d84c      	bhi.n	8000996 <Command_check+0x26a>
+				for (i = 0; x < commandSize; i++, x++){
+ 80008fc:	2100      	movs	r1, #0
+					message[i] = command[x];
+ 80008fe:	4d2e      	ldr	r5, [pc, #184]	; (80009b8 <Command_check+0x28c>)
+				for (i = 0; x < commandSize; i++, x++){
+ 8000900:	7019      	strb	r1, [r3, #0]
+ 8000902:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 8000906:	428a      	cmp	r2, r1
+ 8000908:	d339      	bcc.n	800097e <Command_check+0x252>
+				Send_TCP(ip, ipLenght, port, portLength, SMSLength);//Вызов функции отправки данных по TCP/IP
+ 800090a:	f89d 1014 	ldrb.w	r1, [sp, #20]
+ 800090e:	f89d 3015 	ldrb.w	r3, [sp, #21]
+ 8000912:	f89d 2016 	ldrb.w	r2, [sp, #22]
+ 8000916:	a80e      	add	r0, sp, #56	; 0x38
+ 8000918:	9200      	str	r2, [sp, #0]
+ 800091a:	aa06      	add	r2, sp, #24
+ 800091c:	f7ff fe58 	bl	80005d0 <Send_TCP>
+ 8000920:	e77a      	b.n	8000818 <Command_check+0xec>
+				ip[i] = command[x];
+ 8000922:	7819      	ldrb	r1, [r3, #0]
+ 8000924:	7824      	ldrb	r4, [r4, #0]
+ 8000926:	ad12      	add	r5, sp, #72	; 0x48
+ 8000928:	4429      	add	r1, r5
+ 800092a:	b2e4      	uxtb	r4, r4
+ 800092c:	f801 4c10 	strb.w	r4, [r1, #-16]
+			for(i = 0; command[x] != ',' && i < 15; i++, x++, ipLenght++){//Запись ip адреса
+ 8000930:	7819      	ldrb	r1, [r3, #0]
+ 8000932:	3201      	adds	r2, #1
+ 8000934:	3101      	adds	r1, #1
+ 8000936:	b2c9      	uxtb	r1, r1
+ 8000938:	7019      	strb	r1, [r3, #0]
+ 800093a:	f89d 1014 	ldrb.w	r1, [sp, #20]
+ 800093e:	b2d2      	uxtb	r2, r2
+ 8000940:	3101      	adds	r1, #1
+ 8000942:	b2c9      	uxtb	r1, r1
+ 8000944:	f88d 1014 	strb.w	r1, [sp, #20]
+ 8000948:	e7ac      	b.n	80008a4 <Command_check+0x178>
+				x++;
+ 800094a:	3201      	adds	r2, #1
+ 800094c:	b2d2      	uxtb	r2, r2
+ 800094e:	e7b0      	b.n	80008b2 <Command_check+0x186>
+				port[i] = command[x];
+ 8000950:	7819      	ldrb	r1, [r3, #0]
+ 8000952:	7824      	ldrb	r4, [r4, #0]
+ 8000954:	ad12      	add	r5, sp, #72	; 0x48
+ 8000956:	4429      	add	r1, r5
+ 8000958:	b2e4      	uxtb	r4, r4
+ 800095a:	f801 4c30 	strb.w	r4, [r1, #-48]
+			for(i = 0; command[x] != ',' && i < 5; i++, x++, portLength++){//Зпись порта 
+ 800095e:	7819      	ldrb	r1, [r3, #0]
+ 8000960:	3201      	adds	r2, #1
+ 8000962:	3101      	adds	r1, #1
+ 8000964:	b2c9      	uxtb	r1, r1
+ 8000966:	7019      	strb	r1, [r3, #0]
+ 8000968:	f89d 1015 	ldrb.w	r1, [sp, #21]
+ 800096c:	b2d2      	uxtb	r2, r2
+ 800096e:	3101      	adds	r1, #1
+ 8000970:	b2c9      	uxtb	r1, r1
+ 8000972:	f88d 1015 	strb.w	r1, [sp, #21]
+ 8000976:	e7a7      	b.n	80008c8 <Command_check+0x19c>
+				x++;
+ 8000978:	3201      	adds	r2, #1
+ 800097a:	b2d2      	uxtb	r2, r2
+ 800097c:	e7ab      	b.n	80008d6 <Command_check+0x1aa>
+					message[i] = command[x];
+ 800097e:	7819      	ldrb	r1, [r3, #0]
+ 8000980:	5c84      	ldrb	r4, [r0, r2]
+ 8000982:	b2c9      	uxtb	r1, r1
+ 8000984:	b2e4      	uxtb	r4, r4
+ 8000986:	546c      	strb	r4, [r5, r1]
+				for (i = 0; x < commandSize; i++, x++){
+ 8000988:	7819      	ldrb	r1, [r3, #0]
+ 800098a:	3201      	adds	r2, #1
+ 800098c:	3101      	adds	r1, #1
+ 800098e:	b2c9      	uxtb	r1, r1
+ 8000990:	7019      	strb	r1, [r3, #0]
+ 8000992:	b2d2      	uxtb	r2, r2
+ 8000994:	e7b5      	b.n	8000902 <Command_check+0x1d6>
+			while ((USART2->SR & USART_SR_TXE) == 0) {};
+ 8000996:	4b0a      	ldr	r3, [pc, #40]	; (80009c0 <Command_check+0x294>)
+ 8000998:	881a      	ldrh	r2, [r3, #0]
+ 800099a:	0612      	lsls	r2, r2, #24
+ 800099c:	d5fc      	bpl.n	8000998 <Command_check+0x26c>
+ 800099e:	e762      	b.n	8000866 <Command_check+0x13a>
+ 80009a0:	200000e2 	.word	0x200000e2
+ 80009a4:	20000018 	.word	0x20000018
+ 80009a8:	20000025 	.word	0x20000025
+ 80009ac:	20000078 	.word	0x20000078
+ 80009b0:	2000000f 	.word	0x2000000f
+ 80009b4:	200000df 	.word	0x200000df
+ 80009b8:	200002e2 	.word	0x200002e2
+ 80009bc:	200000e0 	.word	0x200000e0
+ 80009c0:	40004400 	.word	0x40004400
+		i++;
+ 80009c4:	781a      	ldrb	r2, [r3, #0]
+ 80009c6:	3201      	adds	r2, #1
+ 80009c8:	b2d2      	uxtb	r2, r2
+ 80009ca:	701a      	strb	r2, [r3, #0]
+		if (i == 4){
+ 80009cc:	781a      	ldrb	r2, [r3, #0]
+ 80009ce:	2a04      	cmp	r2, #4
+ 80009d0:	f47f aece 	bne.w	8000770 <Command_check+0x44>
+			b = 0;
+ 80009d4:	2100      	movs	r1, #0
+ 80009d6:	4a21      	ldr	r2, [pc, #132]	; (8000a5c <Command_check+0x330>)
+ 80009d8:	7011      	strb	r1, [r2, #0]
+ 80009da:	b2ca      	uxtb	r2, r1
+			while(command[x] != 'n' && x < commandSize){//Ищет начало номера телефона 
+ 80009dc:	5c84      	ldrb	r4, [r0, r2]
+ 80009de:	2c6e      	cmp	r4, #110	; 0x6e
+ 80009e0:	d004      	beq.n	80009ec <Command_check+0x2c0>
+ 80009e2:	f89d 400f 	ldrb.w	r4, [sp, #15]
+ 80009e6:	3101      	adds	r1, #1
+ 80009e8:	42a2      	cmp	r2, r4
+ 80009ea:	d3f6      	bcc.n	80009da <Command_check+0x2ae>
+			for(i = 0; i <= 12; i++, x++){//Записывает номер телефона 
+ 80009ec:	2100      	movs	r1, #0
+			x++;
+ 80009ee:	3202      	adds	r2, #2
+ 80009f0:	b2d2      	uxtb	r2, r2
+			for(i = 0; i <= 12; i++, x++){//Записывает номер телефона 
+ 80009f2:	7019      	strb	r1, [r3, #0]
+ 80009f4:	7819      	ldrb	r1, [r3, #0]
+ 80009f6:	290c      	cmp	r1, #12
+ 80009f8:	d903      	bls.n	8000a02 <Command_check+0x2d6>
+			VoiceCall(phone);//Вызов функции голосового вызова
+ 80009fa:	a80b      	add	r0, sp, #44	; 0x2c
+ 80009fc:	f7ff fe66 	bl	80006cc <VoiceCall>
+ 8000a00:	e70a      	b.n	8000818 <Command_check+0xec>
+				phone[i] = command[x];
+ 8000a02:	7819      	ldrb	r1, [r3, #0]
+ 8000a04:	5c84      	ldrb	r4, [r0, r2]
+ 8000a06:	ad12      	add	r5, sp, #72	; 0x48
+ 8000a08:	4429      	add	r1, r5
+ 8000a0a:	b2e4      	uxtb	r4, r4
+ 8000a0c:	f801 4c1c 	strb.w	r4, [r1, #-28]
+			for(i = 0; i <= 12; i++, x++){//Записывает номер телефона 
+ 8000a10:	7819      	ldrb	r1, [r3, #0]
+ 8000a12:	3201      	adds	r2, #1
+ 8000a14:	3101      	adds	r1, #1
+ 8000a16:	b2c9      	uxtb	r1, r1
+ 8000a18:	7019      	strb	r1, [r3, #0]
+ 8000a1a:	b2d2      	uxtb	r2, r2
+ 8000a1c:	e7ea      	b.n	80009f4 <Command_check+0x2c8>
+		i++;
+ 8000a1e:	781a      	ldrb	r2, [r3, #0]
+ 8000a20:	3201      	adds	r2, #1
+ 8000a22:	b2d2      	uxtb	r2, r2
+ 8000a24:	701a      	strb	r2, [r3, #0]
+		if (i == 9){
+ 8000a26:	781a      	ldrb	r2, [r3, #0]
+ 8000a28:	2a09      	cmp	r2, #9
+ 8000a2a:	f47f aeae 	bne.w	800078a <Command_check+0x5e>
+			b = 0;
+ 8000a2e:	2200      	movs	r2, #0
+ 8000a30:	4b0a      	ldr	r3, [pc, #40]	; (8000a5c <Command_check+0x330>)
+ 8000a32:	701a      	strb	r2, [r3, #0]
+ 8000a34:	b2d3      	uxtb	r3, r2
+			while(command[x] != ',' && x < commandSize){//Поиск номера сим карты
+ 8000a36:	5cc1      	ldrb	r1, [r0, r3]
+ 8000a38:	292c      	cmp	r1, #44	; 0x2c
+ 8000a3a:	d004      	beq.n	8000a46 <Command_check+0x31a>
+ 8000a3c:	f89d 100f 	ldrb.w	r1, [sp, #15]
+ 8000a40:	3201      	adds	r2, #1
+ 8000a42:	428b      	cmp	r3, r1
+ 8000a44:	d3f6      	bcc.n	8000a34 <Command_check+0x308>
+			x++;
+ 8000a46:	3301      	adds	r3, #1
+			simNum = command[x];//Запись номера сим карты
+ 8000a48:	b2db      	uxtb	r3, r3
+ 8000a4a:	5cc3      	ldrb	r3, [r0, r3]
+ 8000a4c:	b2db      	uxtb	r3, r3
+ 8000a4e:	f88d 3017 	strb.w	r3, [sp, #23]
+			SIMCardSwitch(simNum);//Вызов функции переключения основной сим карты 
+ 8000a52:	f89d 0017 	ldrb.w	r0, [sp, #23]
+ 8000a56:	f7ff fe5b 	bl	8000710 <SIMCardSwitch>
+ 8000a5a:	e6dd      	b.n	8000818 <Command_check+0xec>
+ 8000a5c:	200000df 	.word	0x200000df
+
+08000a60 <TIM2_IRQHandler>:
+#include "main_init.c"
+
+
+// =================== TIM2 0.5 сек. ===================
+void TIM2_IRQHandler() {
+  if ((TIM2->SR & TIM_SR_UIF) != 0) { // Прерывание по переполнению
+ 8000a60:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
+ 8000a64:	8a13      	ldrh	r3, [r2, #16]
+ 8000a66:	07db      	lsls	r3, r3, #31
+ 8000a68:	d50f      	bpl.n	8000a8a <TIM2_IRQHandler+0x2a>
+    TIM2->SR &= ~ TIM_SR_UIF; 
+ 8000a6a:	8a13      	ldrh	r3, [r2, #16]
+ 8000a6c:	f023 0301 	bic.w	r3, r3, #1
+ 8000a70:	041b      	lsls	r3, r3, #16
+ 8000a72:	0c1b      	lsrs	r3, r3, #16
+ 8000a74:	8213      	strh	r3, [r2, #16]
+    Timer++; // Наш счётчик времени
+ 8000a76:	4a17      	ldr	r2, [pc, #92]	; (8000ad4 <TIM2_IRQHandler+0x74>)
+ 8000a78:	8813      	ldrh	r3, [r2, #0]
+ 8000a7a:	3301      	adds	r3, #1
+ 8000a7c:	b29b      	uxth	r3, r3
+ 8000a7e:	8013      	strh	r3, [r2, #0]
+    GPIOC->ODR ^= GPIO_ODR_ODR13; // Мигаем светодиодом PC8
+ 8000a80:	4a15      	ldr	r2, [pc, #84]	; (8000ad8 <TIM2_IRQHandler+0x78>)
+ 8000a82:	68d3      	ldr	r3, [r2, #12]
+ 8000a84:	f483 5300 	eor.w	r3, r3, #8192	; 0x2000
+ 8000a88:	60d3      	str	r3, [r2, #12]
+  }
+  if (sendDelay != 0){
+ 8000a8a:	4b14      	ldr	r3, [pc, #80]	; (8000adc <TIM2_IRQHandler+0x7c>)
+ 8000a8c:	781a      	ldrb	r2, [r3, #0]
+ 8000a8e:	b11a      	cbz	r2, 8000a98 <TIM2_IRQHandler+0x38>
+	  sendDelay--;//Задержка для получения ответа от simcom или stm
+ 8000a90:	781a      	ldrb	r2, [r3, #0]
+ 8000a92:	3a01      	subs	r2, #1
+ 8000a94:	b2d2      	uxtb	r2, r2
+ 8000a96:	701a      	strb	r2, [r3, #0]
+  }
+  
+  if(sendSMSCommandResponseDelay != 0){
+ 8000a98:	4911      	ldr	r1, [pc, #68]	; (8000ae0 <TIM2_IRQHandler+0x80>)
+ 8000a9a:	780a      	ldrb	r2, [r1, #0]
+ 8000a9c:	b11a      	cbz	r2, 8000aa6 <TIM2_IRQHandler+0x46>
+	  sendSMSCommandResponseDelay--;//Задержка для получения ответа от simcom при отправке СМС сообщения
+ 8000a9e:	780a      	ldrb	r2, [r1, #0]
+ 8000aa0:	3a01      	subs	r2, #1
+ 8000aa2:	b2d2      	uxtb	r2, r2
+ 8000aa4:	700a      	strb	r2, [r1, #0]
+  }
+  
+  if(sendTCPCommandResponseDelay != 0){
+ 8000aa6:	490f      	ldr	r1, [pc, #60]	; (8000ae4 <TIM2_IRQHandler+0x84>)
+ 8000aa8:	780a      	ldrb	r2, [r1, #0]
+ 8000aaa:	b11a      	cbz	r2, 8000ab4 <TIM2_IRQHandler+0x54>
+	sendTCPCommandResponseDelay--;//Задержка для получения ответа от simcom при отправке данных по TCP
+ 8000aac:	780a      	ldrb	r2, [r1, #0]
+ 8000aae:	3a01      	subs	r2, #1
+ 8000ab0:	b2d2      	uxtb	r2, r2
+ 8000ab2:	700a      	strb	r2, [r1, #0]
+  }
+  
+  if (commandProcessing == 1 && a == 1 && sendDelay == 0){//Необходима для работы функции поиска новых СМС сообщений
+ 8000ab4:	4a0c      	ldr	r2, [pc, #48]	; (8000ae8 <TIM2_IRQHandler+0x88>)
+ 8000ab6:	7812      	ldrb	r2, [r2, #0]
+ 8000ab8:	2a01      	cmp	r2, #1
+ 8000aba:	d10a      	bne.n	8000ad2 <TIM2_IRQHandler+0x72>
+ 8000abc:	4a0b      	ldr	r2, [pc, #44]	; (8000aec <TIM2_IRQHandler+0x8c>)
+ 8000abe:	7812      	ldrb	r2, [r2, #0]
+ 8000ac0:	2a01      	cmp	r2, #1
+ 8000ac2:	d106      	bne.n	8000ad2 <TIM2_IRQHandler+0x72>
+ 8000ac4:	781b      	ldrb	r3, [r3, #0]
+ 8000ac6:	b923      	cbnz	r3, 8000ad2 <TIM2_IRQHandler+0x72>
+	  Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Выводит результаты запроса СМС сообщения с указанным индексом
+ 8000ac8:	4b09      	ldr	r3, [pc, #36]	; (8000af0 <TIM2_IRQHandler+0x90>)
+ 8000aca:	480a      	ldr	r0, [pc, #40]	; (8000af4 <TIM2_IRQHandler+0x94>)
+ 8000acc:	7819      	ldrb	r1, [r3, #0]
+ 8000ace:	f7ff bb63 	b.w	8000198 <Send_command_from_simcom_to_uart>
+ 8000ad2:	4770      	bx	lr
+ 8000ad4:	200000dc 	.word	0x200000dc
+ 8000ad8:	40011000 	.word	0x40011000
+ 8000adc:	200000e9 	.word	0x200000e9
+ 8000ae0:	200000ea 	.word	0x200000ea
+ 8000ae4:	200000eb 	.word	0x200000eb
+ 8000ae8:	200000e1 	.word	0x200000e1
+ 8000aec:	200000de 	.word	0x200000de
+ 8000af0:	200000e8 	.word	0x200000e8
+ 8000af4:	2000038c 	.word	0x2000038c
+
+08000af8 <main>:
+// ========= Инициализация микроконтроллера =========
+static __INLINE void main_init() {
+// Буфер предвыборки разрешён, 2 цикла задержки для FLASH, см. PM0075
+FLASH->ACR = FLASH_ACR_PRFTBE | FLASH_ACR_LATENCY_2;
+ 8000af8:	2212      	movs	r2, #18
+ 8000afa:	4b8a      	ldr	r3, [pc, #552]	; (8000d24 <main+0x22c>)
+  }
+}  
+
+// =========================== MAIN =========================
+int main(void) {
+ 8000afc:	b583      	push	{r0, r1, r7, lr}
+ 8000afe:	601a      	str	r2, [r3, #0]
+RCC->CFGR |= RCC_CFGR_HPRE_DIV1; // HCLK = SYSCLK
+ 8000b00:	f5a3 5380 	sub.w	r3, r3, #4096	; 0x1000
+ 8000b04:	685a      	ldr	r2, [r3, #4]
+ 8000b06:	605a      	str	r2, [r3, #4]
+RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; // PCLK1 = SYSCLK / 2 (APB1)
+ 8000b08:	685a      	ldr	r2, [r3, #4]
+ 8000b0a:	f442 6280 	orr.w	r2, r2, #1024	; 0x400
+ 8000b0e:	605a      	str	r2, [r3, #4]
+RCC->CFGR |= RCC_CFGR_PPRE2_DIV1; // PCLK2 = SYSCLK (APB2)
+ 8000b10:	685a      	ldr	r2, [r3, #4]
+ 8000b12:	605a      	str	r2, [r3, #4]
+RCC->CFGR |= RCC_CFGR_SW_PLL; // Выбираем работу от PLL
+ 8000b14:	685a      	ldr	r2, [r3, #4]
+ 8000b16:	f042 0202 	orr.w	r2, r2, #2
+ 8000b1a:	605a      	str	r2, [r3, #4]
+RCC->CFGR |= RCC_CFGR_PLLMULL9; // SYSCLK = 72 MHz
+ 8000b1c:	685a      	ldr	r2, [r3, #4]
+ 8000b1e:	f442 12e0 	orr.w	r2, r2, #1835008	; 0x1c0000
+ 8000b22:	605a      	str	r2, [r3, #4]
+RCC->CFGR |= RCC_CFGR_PLLSRC_HSE; // Тактирования PLL от кварца
+ 8000b24:	685a      	ldr	r2, [r3, #4]
+ 8000b26:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+ 8000b2a:	605a      	str	r2, [r3, #4]
+RCC->CR |= RCC_CR_HSEON; //Запускаем генератор HSE
+ 8000b2c:	681a      	ldr	r2, [r3, #0]
+ 8000b2e:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+ 8000b32:	601a      	str	r2, [r3, #0]
+while (!(RCC->CR & RCC_CR_HSERDY)) {};
+ 8000b34:	681a      	ldr	r2, [r3, #0]
+ 8000b36:	0391      	lsls	r1, r2, #14
+ 8000b38:	d5fc      	bpl.n	8000b34 <main+0x3c>
+RCC->CR |= RCC_CR_PLLON; // Запускаем PLL
+ 8000b3a:	681a      	ldr	r2, [r3, #0]
+ 8000b3c:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+ 8000b40:	601a      	str	r2, [r3, #0]
+while ((RCC->CR & RCC_CR_PLLRDY) == 0) {};
+ 8000b42:	681a      	ldr	r2, [r3, #0]
+ 8000b44:	0192      	lsls	r2, r2, #6
+ 8000b46:	d5fc      	bpl.n	8000b42 <main+0x4a>
+// Ожидаем когда PLL станет источником тактирования
+while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_1) {};
+ 8000b48:	685a      	ldr	r2, [r3, #4]
+ 8000b4a:	f002 020c 	and.w	r2, r2, #12
+ 8000b4e:	2a08      	cmp	r2, #8
+ 8000b50:	d1fa      	bne.n	8000b48 <main+0x50>
+//RCC->CR &= ~RCC_CR_HSION; // Отключаем внутренний RC-генератор
+
+//====================== DWT ======================
+SCB_DEMCR |= 0x01000000; // разрешаем использовать счётчик
+ 8000b52:	4975      	ldr	r1, [pc, #468]	; (8000d28 <main+0x230>)
+GPIOC->CRH &= ~GPIO_CRH_CNF13;
+
+//================= Группа портов "B" ===========================
+RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; // Включаем тактирование порта GPIO "B"
+// pin 5
+GPIOB->CRL &= ~GPIO_CRL_MODE5; // Сброс настроек MODE
+ 8000b54:	4c75      	ldr	r4, [pc, #468]	; (8000d2c <main+0x234>)
+SCB_DEMCR |= 0x01000000; // разрешаем использовать счётчик
+ 8000b56:	680a      	ldr	r2, [r1, #0]
+	GPIOA->CRH &= ~(GPIO_CRH_MODE9 | GPIO_CRH_CNF9 | GPIO_CRH_MODE10 | GPIO_CRH_CNF10);
+	// Потом нужные биты устанавливаем в '1'
+	GPIOA->CRH |= (GPIO_CRH_MODE9_0 | GPIO_CRH_CNF9_1 | GPIO_CRH_CNF10_0); 
+	USART1->BRR = 625; // PCLK2 / Baud = 72000000 / 9600 бод
+	// Включаем USART, передатчик и приемник
+	USART1->CR1 = USART_CR1_UE | USART_CR1_TE | USART_CR1_RE;
+ 8000b58:	f242 050c 	movw	r5, #8204	; 0x200c
+SCB_DEMCR |= 0x01000000; // разрешаем использовать счётчик
+ 8000b5c:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+ 8000b60:	600a      	str	r2, [r1, #0]
+DWT_CYCCNT = 0; // обнуляем значение счётного регистра
+ 8000b62:	2100      	movs	r1, #0
+ 8000b64:	4a72      	ldr	r2, [pc, #456]	; (8000d30 <main+0x238>)
+	USART1->BRR = 625; // PCLK2 / Baud = 72000000 / 9600 бод
+ 8000b66:	4873      	ldr	r0, [pc, #460]	; (8000d34 <main+0x23c>)
+DWT_CYCCNT = 0; // обнуляем значение счётного регистра
+ 8000b68:	6011      	str	r1, [r2, #0]
+DWT_CONTROL |= 1; // запускаем счётчик  
+ 8000b6a:	4973      	ldr	r1, [pc, #460]	; (8000d38 <main+0x240>)
+
+// ========================= ГЛАВНЫЙ ЦИКЛ =========================
+
+while (1) {
+	
+	if (a == 1 && sendDelay == 0){
+ 8000b6c:	f8df 8200 	ldr.w	r8, [pc, #512]	; 8000d70 <main+0x278>
+ 8000b70:	680a      	ldr	r2, [r1, #0]
+ 8000b72:	4e72      	ldr	r6, [pc, #456]	; (8000d3c <main+0x244>)
+ 8000b74:	f042 0201 	orr.w	r2, r2, #1
+ 8000b78:	600a      	str	r2, [r1, #0]
+RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // Включаем тактирование порта GPIO "C"
+ 8000b7a:	699a      	ldr	r2, [r3, #24]
+		SMS_search(responseBuffer, responseIndex);
+ 8000b7c:	4f70      	ldr	r7, [pc, #448]	; (8000d40 <main+0x248>)
+ 8000b7e:	f042 0210 	orr.w	r2, r2, #16
+ 8000b82:	619a      	str	r2, [r3, #24]
+GPIOC->CRH &= ~GPIO_CRH_MODE13; // Сброс настроек MODE
+ 8000b84:	4a6f      	ldr	r2, [pc, #444]	; (8000d44 <main+0x24c>)
+ 8000b86:	6851      	ldr	r1, [r2, #4]
+ 8000b88:	f421 1140 	bic.w	r1, r1, #3145728	; 0x300000
+ 8000b8c:	6051      	str	r1, [r2, #4]
+GPIOC->CRH |= GPIO_CRH_MODE13; 
+ 8000b8e:	6851      	ldr	r1, [r2, #4]
+ 8000b90:	f441 1140 	orr.w	r1, r1, #3145728	; 0x300000
+ 8000b94:	6051      	str	r1, [r2, #4]
+GPIOC->CRH &= ~GPIO_CRH_CNF13;
+ 8000b96:	6851      	ldr	r1, [r2, #4]
+ 8000b98:	f421 0140 	bic.w	r1, r1, #12582912	; 0xc00000
+ 8000b9c:	6051      	str	r1, [r2, #4]
+RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; // Включаем тактирование порта GPIO "B"
+ 8000b9e:	699a      	ldr	r2, [r3, #24]
+ 8000ba0:	f042 0208 	orr.w	r2, r2, #8
+ 8000ba4:	619a      	str	r2, [r3, #24]
+GPIOB->CRL &= ~GPIO_CRL_MODE5; // Сброс настроек MODE
+ 8000ba6:	6822      	ldr	r2, [r4, #0]
+ 8000ba8:	f422 1240 	bic.w	r2, r2, #3145728	; 0x300000
+ 8000bac:	6022      	str	r2, [r4, #0]
+GPIOB->CRL |= GPIO_CRL_MODE5; 
+ 8000bae:	6822      	ldr	r2, [r4, #0]
+ 8000bb0:	f442 1240 	orr.w	r2, r2, #3145728	; 0x300000
+ 8000bb4:	6022      	str	r2, [r4, #0]
+GPIOB->CRL &= ~GPIO_CRL_CNF5;
+ 8000bb6:	6822      	ldr	r2, [r4, #0]
+ 8000bb8:	f422 0240 	bic.w	r2, r2, #12582912	; 0xc00000
+ 8000bbc:	6022      	str	r2, [r4, #0]
+GPIOB->CRL &= ~GPIO_CRL_MODE6; // Сброс настроек MODE
+ 8000bbe:	6822      	ldr	r2, [r4, #0]
+ 8000bc0:	f022 7240 	bic.w	r2, r2, #50331648	; 0x3000000
+ 8000bc4:	6022      	str	r2, [r4, #0]
+GPIOB->CRL |= GPIO_CRL_MODE6; 
+ 8000bc6:	6822      	ldr	r2, [r4, #0]
+ 8000bc8:	f042 7240 	orr.w	r2, r2, #50331648	; 0x3000000
+ 8000bcc:	6022      	str	r2, [r4, #0]
+GPIOB->CRL &= ~GPIO_CRL_CNF6;
+ 8000bce:	6822      	ldr	r2, [r4, #0]
+ 8000bd0:	f022 6240 	bic.w	r2, r2, #201326592	; 0xc000000
+ 8000bd4:	6022      	str	r2, [r4, #0]
+	RCC->APB2ENR |= (RCC_APB2ENR_IOPAEN | RCC_APB2ENR_AFIOEN); 
+ 8000bd6:	699a      	ldr	r2, [r3, #24]
+ 8000bd8:	f042 0205 	orr.w	r2, r2, #5
+ 8000bdc:	619a      	str	r2, [r3, #24]
+	RCC->APB2ENR |= RCC_APB2ENR_USART1EN; // Включаем тактирование USART1
+ 8000bde:	699a      	ldr	r2, [r3, #24]
+ 8000be0:	f442 4280 	orr.w	r2, r2, #16384	; 0x4000
+ 8000be4:	619a      	str	r2, [r3, #24]
+	GPIOA->CRH &= ~(GPIO_CRH_MODE9 | GPIO_CRH_CNF9 | GPIO_CRH_MODE10 | GPIO_CRH_CNF10);
+ 8000be6:	4a58      	ldr	r2, [pc, #352]	; (8000d48 <main+0x250>)
+ 8000be8:	6851      	ldr	r1, [r2, #4]
+ 8000bea:	f421 617f 	bic.w	r1, r1, #4080	; 0xff0
+ 8000bee:	6051      	str	r1, [r2, #4]
+	GPIOA->CRH |= (GPIO_CRH_MODE9_0 | GPIO_CRH_CNF9_1 | GPIO_CRH_CNF10_0); 
+ 8000bf0:	6851      	ldr	r1, [r2, #4]
+ 8000bf2:	f441 6192 	orr.w	r1, r1, #1168	; 0x490
+ 8000bf6:	6051      	str	r1, [r2, #4]
+	USART1->BRR = 625; // PCLK2 / Baud = 72000000 / 9600 бод
+ 8000bf8:	f240 2171 	movw	r1, #625	; 0x271
+ 8000bfc:	8101      	strh	r1, [r0, #8]
+	USART1->CR1 = USART_CR1_UE | USART_CR1_TE | USART_CR1_RE;
+ 8000bfe:	8185      	strh	r5, [r0, #12]
+	USART1->CR1 |= USART_CR1_RXNEIE; // Разрешаем прерывание по приёму RX
+ 8000c00:	8981      	ldrh	r1, [r0, #12]
+ 8000c02:	b289      	uxth	r1, r1
+ 8000c04:	f041 0120 	orr.w	r1, r1, #32
+ 8000c08:	8181      	strh	r1, [r0, #12]
+ * Enable a device specific interupt in the NVIC interrupt controller.
+ * The interrupt number cannot be a negative value.
+ */
+static __INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
+{
+  NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+ 8000c0a:	2120      	movs	r1, #32
+ 8000c0c:	484f      	ldr	r0, [pc, #316]	; (8000d4c <main+0x254>)
+ 8000c0e:	6041      	str	r1, [r0, #4]
+	NVIC_EnableIRQ(USART1_IRQn);
+	
+//====================== USART2 ====================== 
+	// Внешний порт (получает\отдаёт инструкции с\на устройво)
+	// Включаем тактирование порта GPIOA и блока альтернативных функций
+	RCC->APB1ENR |= RCC_APB1ENR_USART2EN; // Включаем тактирование USART2
+ 8000c10:	69d9      	ldr	r1, [r3, #28]
+ 8000c12:	f441 3100 	orr.w	r1, r1, #131072	; 0x20000
+ 8000c16:	61d9      	str	r1, [r3, #28]
+	// PA2 (TX2) AFIO Push-Pull, 10MHz. PA3 (RX2) HiZ, 10MHz
+	// Вначале устанавливаем пары бит в "00", это делать обязательно !
+	GPIOA->CRL &= ~(GPIO_CRL_MODE2 | GPIO_CRL_CNF2 | GPIO_CRL_MODE3 | GPIO_CRL_CNF3);
+ 8000c18:	6811      	ldr	r1, [r2, #0]
+ 8000c1a:	f421 417f 	bic.w	r1, r1, #65280	; 0xff00
+ 8000c1e:	6011      	str	r1, [r2, #0]
+	// Потом нужные биты устанавливаем в '1'
+	GPIOA->CRL |= (GPIO_CRL_MODE2_0 | GPIO_CRL_CNF2_1 | GPIO_CRL_CNF3_0); 
+ 8000c20:	6811      	ldr	r1, [r2, #0]
+ 8000c22:	f441 4192 	orr.w	r1, r1, #18688	; 0x4900
+ 8000c26:	6011      	str	r1, [r2, #0]
+	USART2->BRR = 312; // PCLK2 / Baud = 72000000 / 115200 бод
+ 8000c28:	f44f 729c 	mov.w	r2, #312	; 0x138
+ 8000c2c:	4948      	ldr	r1, [pc, #288]	; (8000d50 <main+0x258>)
+ 8000c2e:	810a      	strh	r2, [r1, #8]
+	// Включаем USART, передатчик и приемник
+	USART2->CR1 = USART_CR1_UE | USART_CR1_TE | USART_CR1_RE;
+ 8000c30:	818d      	strh	r5, [r1, #12]
+	USART2->CR1 |= USART_CR1_RXNEIE; // Разрешаем прерывание по приёму RX
+ 8000c32:	898a      	ldrh	r2, [r1, #12]
+ 8000c34:	b292      	uxth	r2, r2
+ 8000c36:	f042 0220 	orr.w	r2, r2, #32
+ 8000c3a:	818a      	strh	r2, [r1, #12]
+ 8000c3c:	2240      	movs	r2, #64	; 0x40
+ 8000c3e:	6042      	str	r2, [r0, #4]
+	NVIC_EnableIRQ(USART2_IRQn);
+  
+
+// ======================== TIM2 =======================
+// Разрешаем тактирование, PCLK1 = 12 МГц, TIM2 получается x 2 = 24 МГц
+RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; 
+ 8000c40:	69da      	ldr	r2, [r3, #28]
+ 8000c42:	f042 0201 	orr.w	r2, r2, #1
+ 8000c46:	61da      	str	r2, [r3, #28]
+TIM2->SMCR &= ~TIM_SMCR_SMS; // Выбираем внутреннее тактирование
+ 8000c48:	f04f 4380 	mov.w	r3, #1073741824	; 0x40000000
+ 8000c4c:	891a      	ldrh	r2, [r3, #8]
+ 8000c4e:	f022 0207 	bic.w	r2, r2, #7
+ 8000c52:	0412      	lsls	r2, r2, #16
+ 8000c54:	0c12      	lsrs	r2, r2, #16
+ 8000c56:	811a      	strh	r2, [r3, #8]
+TIM2->PSC = 720 - 1; // Шаг (квант) счёта 10 мкс, 100 KHz
+ 8000c58:	f240 22cf 	movw	r2, #719	; 0x2cf
+ 8000c5c:	851a      	strh	r2, [r3, #40]	; 0x28
+TIM2->ARR = 50000 - 1; // Переполнение через 0.5 сек.
+ 8000c5e:	f24c 324f 	movw	r2, #49999	; 0xc34f
+ 8000c62:	859a      	strh	r2, [r3, #44]	; 0x2c
+TIM2->DIER |= TIM_DIER_UIE; // Разрешаем прерывание по переполнению таймера
+ 8000c64:	899a      	ldrh	r2, [r3, #12]
+ 8000c66:	b292      	uxth	r2, r2
+ 8000c68:	f042 0201 	orr.w	r2, r2, #1
+ 8000c6c:	819a      	strh	r2, [r3, #12]
+ 8000c6e:	f04f 5280 	mov.w	r2, #268435456	; 0x10000000
+ 8000c72:	6002      	str	r2, [r0, #0]
+NVIC_EnableIRQ(TIM2_IRQn); // Разрешаем прерывание в контроллере прерываний
+TIM2->CR1 = TIM_CR1_CEN; // Разрешаем счёт
+ 8000c74:	2201      	movs	r2, #1
+delay_ms(5000);
+ 8000c76:	f241 3088 	movw	r0, #5000	; 0x1388
+ 8000c7a:	801a      	strh	r2, [r3, #0]
+ 8000c7c:	f7ff fa7a 	bl	8000174 <delay_ms>
+GPIOB->BSRR |= GPIO_BSRR_BS5;//Запуск simcom
+ 8000c80:	6923      	ldr	r3, [r4, #16]
+delay_ms(1000);
+ 8000c82:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+GPIOB->BSRR |= GPIO_BSRR_BS5;//Запуск simcom
+ 8000c86:	f043 0320 	orr.w	r3, r3, #32
+ 8000c8a:	6123      	str	r3, [r4, #16]
+delay_ms(1000);
+ 8000c8c:	f7ff fa72 	bl	8000174 <delay_ms>
+GPIOB->BRR |= GPIO_BRR_BR5;
+ 8000c90:	6963      	ldr	r3, [r4, #20]
+delay_ms(90000);//Ожидание инициализации модуля передачи данных 
+ 8000c92:	4830      	ldr	r0, [pc, #192]	; (8000d54 <main+0x25c>)
+GPIOB->BRR |= GPIO_BRR_BR5;
+ 8000c94:	f043 0320 	orr.w	r3, r3, #32
+ 8000c98:	6163      	str	r3, [r4, #20]
+Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//отправка ответа от simcom в МК
+ 8000c9a:	4c2f      	ldr	r4, [pc, #188]	; (8000d58 <main+0x260>)
+delay_ms(90000);//Ожидание инициализации модуля передачи данных 
+ 8000c9c:	f7ff fa6a 	bl	8000174 <delay_ms>
+Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//отправка ответа от simcom в МК
+ 8000ca0:	7821      	ldrb	r1, [r4, #0]
+ 8000ca2:	4827      	ldr	r0, [pc, #156]	; (8000d40 <main+0x248>)
+ 8000ca4:	f7ff fa78 	bl	8000198 <Send_command_from_simcom_to_uart>
+SMSMessageFormatcommand[8] = '1';
+ 8000ca8:	2331      	movs	r3, #49	; 0x31
+ 8000caa:	482c      	ldr	r0, [pc, #176]	; (8000d5c <main+0x264>)
+Send_command_from_uart_to_simcom(SMSMessageFormatcommand, 10);//Установка формата сообщений в TextMod
+ 8000cac:	210a      	movs	r1, #10
+SMSMessageFormatcommand[8] = '1';
+ 8000cae:	7203      	strb	r3, [r0, #8]
+Send_command_from_uart_to_simcom(SMSMessageFormatcommand, 10);//Установка формата сообщений в TextMod
+ 8000cb0:	f7ff fa9a 	bl	80001e8 <Send_command_from_uart_to_simcom>
+delay_ms(5000);//Ожидание ответа от simcom
+ 8000cb4:	f241 3088 	movw	r0, #5000	; 0x1388
+ 8000cb8:	f7ff fa5c 	bl	8000174 <delay_ms>
+Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Отправка ответа от simcom в МК
+ 8000cbc:	7821      	ldrb	r1, [r4, #0]
+ 8000cbe:	4820      	ldr	r0, [pc, #128]	; (8000d40 <main+0x248>)
+ 8000cc0:	f7ff fa6a 	bl	8000198 <Send_command_from_simcom_to_uart>
+StartSocketService();//Вызов функции стартового конфигурирования сетевого интерфейса модуля передачи данных
+ 8000cc4:	f7ff faf0 	bl	80002a8 <StartSocketService>
+uint8_t statusReady[7] = {'R', 'e', 'a', 'd', 'y', 0x0D, 0x1A};//Сообщение о готовности к работе и завершении конфигурирования
+ 8000cc8:	4b25      	ldr	r3, [pc, #148]	; (8000d60 <main+0x268>)
+Send_command_from_simcom_to_uart(statusReady, 7);//Отправка сообщения о готовности к работе и завершении конфигурирования
+ 8000cca:	2107      	movs	r1, #7
+uint8_t statusReady[7] = {'R', 'e', 'a', 'd', 'y', 0x0D, 0x1A};//Сообщение о готовности к работе и завершении конфигурирования
+ 8000ccc:	6818      	ldr	r0, [r3, #0]
+ 8000cce:	889a      	ldrh	r2, [r3, #4]
+ 8000cd0:	799b      	ldrb	r3, [r3, #6]
+ 8000cd2:	9000      	str	r0, [sp, #0]
+Send_command_from_simcom_to_uart(statusReady, 7);//Отправка сообщения о готовности к работе и завершении конфигурирования
+ 8000cd4:	4668      	mov	r0, sp
+uint8_t statusReady[7] = {'R', 'e', 'a', 'd', 'y', 0x0D, 0x1A};//Сообщение о готовности к работе и завершении конфигурирования
+ 8000cd6:	f8ad 2004 	strh.w	r2, [sp, #4]
+ 8000cda:	f88d 3006 	strb.w	r3, [sp, #6]
+Send_command_from_simcom_to_uart(statusReady, 7);//Отправка сообщения о готовности к работе и завершении конфигурирования
+ 8000cde:	f7ff fa5b 	bl	8000198 <Send_command_from_simcom_to_uart>
+	if (a == 1 && sendDelay == 0){
+ 8000ce2:	f898 3000 	ldrb.w	r3, [r8]
+ 8000ce6:	2b01      	cmp	r3, #1
+ 8000ce8:	d109      	bne.n	8000cfe <main+0x206>
+ 8000cea:	7833      	ldrb	r3, [r6, #0]
+ 8000cec:	b93b      	cbnz	r3, 8000cfe <main+0x206>
+		SMS_search(responseBuffer, responseIndex);
+ 8000cee:	7821      	ldrb	r1, [r4, #0]
+ 8000cf0:	4638      	mov	r0, r7
+ 8000cf2:	f7ff fb1f 	bl	8000334 <SMS_search>
+		Send_command_from_simcom_to_uart(responseBuffer, responseIndex);//Отправка сообщений от simcom в МК
+ 8000cf6:	7821      	ldrb	r1, [r4, #0]
+ 8000cf8:	4638      	mov	r0, r7
+ 8000cfa:	f7ff fa4d 	bl	8000198 <Send_command_from_simcom_to_uart>
+	}
+	if (b == 1 && sendDelay == 0){
+ 8000cfe:	4b19      	ldr	r3, [pc, #100]	; (8000d64 <main+0x26c>)
+ 8000d00:	781b      	ldrb	r3, [r3, #0]
+ 8000d02:	2b01      	cmp	r3, #1
+ 8000d04:	d1ed      	bne.n	8000ce2 <main+0x1ea>
+ 8000d06:	7833      	ldrb	r3, [r6, #0]
+ 8000d08:	2b00      	cmp	r3, #0
+ 8000d0a:	d1ea      	bne.n	8000ce2 <main+0x1ea>
+		if (Command_check(commandBuffer, commandIndex) == 0){//Проверка на пользовательские команды 
+ 8000d0c:	4d16      	ldr	r5, [pc, #88]	; (8000d68 <main+0x270>)
+ 8000d0e:	4817      	ldr	r0, [pc, #92]	; (8000d6c <main+0x274>)
+ 8000d10:	7829      	ldrb	r1, [r5, #0]
+ 8000d12:	f7ff fd0b 	bl	800072c <Command_check>
+ 8000d16:	2800      	cmp	r0, #0
+ 8000d18:	d1e3      	bne.n	8000ce2 <main+0x1ea>
+			Send_command_from_uart_to_simcom(commandBuffer, commandIndex);//Отправка команд от МК к simcom
+ 8000d1a:	7829      	ldrb	r1, [r5, #0]
+ 8000d1c:	4813      	ldr	r0, [pc, #76]	; (8000d6c <main+0x274>)
+ 8000d1e:	f7ff fa63 	bl	80001e8 <Send_command_from_uart_to_simcom>
+ 8000d22:	e7de      	b.n	8000ce2 <main+0x1ea>
+ 8000d24:	40022000 	.word	0x40022000
+ 8000d28:	e000edfc 	.word	0xe000edfc
+ 8000d2c:	40010c00 	.word	0x40010c00
+ 8000d30:	e0001004 	.word	0xe0001004
+ 8000d34:	40013800 	.word	0x40013800
+ 8000d38:	e0001000 	.word	0xe0001000
+ 8000d3c:	200000e9 	.word	0x200000e9
+ 8000d40:	2000038c 	.word	0x2000038c
+ 8000d44:	40011000 	.word	0x40011000
+ 8000d48:	40010800 	.word	0x40010800
+ 8000d4c:	e000e100 	.word	0xe000e100
+ 8000d50:	40004400 	.word	0x40004400
+ 8000d54:	00015f90 	.word	0x00015f90
+ 8000d58:	200000e8 	.word	0x200000e8
+ 8000d5c:	2000001b 	.word	0x2000001b
+ 8000d60:	08000d74 	.word	0x08000d74
+ 8000d64:	200000df 	.word	0x200000df
+ 8000d68:	200000e0 	.word	0x200000e0
+ 8000d6c:	200000ee 	.word	0x200000ee
+ 8000d70:	200000de 	.word	0x200000de
+ 8000d74:	64616552 	.word	0x64616552
+ 8000d78:	001a0d79 	.word	0x001a0d79

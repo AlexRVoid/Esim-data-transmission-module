@@ -1,0 +1,285 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+commandBuffer       0x1f4             target/main.o
+message             0xaa              target/main.o
+responseBuffer      0x3e8             target/main.o
+
+Discarded input sections
+
+ .text          0x00000000        0x0 target/startup.o
+ .data          0x00000000        0x0 target/startup.o
+ .bss           0x00000000        0x0 target/startup.o
+ .text          0x00000000        0x0 target/main.o
+ .data          0x00000000        0x0 target/main.o
+ .bss           0x00000000        0x0 target/main.o
+ .bss.commandNum
+                0x00000000        0x1 target/main.o
+ .bss.lastSMSIndex
+                0x00000000        0x1 target/main.o
+ .bss.sendSMSErr
+                0x00000000        0x1 target/main.o
+ .data.SMSReferenceResponse
+                0x00000000        0x6 target/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x08000000         0x00008000         xr
+ram              0x20000000         0x00002800         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD target/startup.o
+LOAD target/main.o
+
+.text           0x08000000      0xd7c
+                0x08000000                . = ALIGN (0x4)
+ *(.interrupt_vector)
+ .interrupt_vector
+                0x08000000      0x134 target/startup.o
+                0x08000000                table_interrupt_vector
+ *(.text)
+ *(.text*)
+ .text.handler_default
+                0x08000134        0x2 target/startup.o
+                0x08000134                handler_default
+ *fill*         0x08000136        0x2 
+ .text.handler_reset
+                0x08000138       0x3c target/startup.o
+                0x08000138                handler_reset
+ .text.delay_ms
+                0x08000174       0x24 target/main.o
+ .text.Send_command_from_simcom_to_uart
+                0x08000198       0x50 target/main.o
+                0x08000198                Send_command_from_simcom_to_uart
+ .text.Send_command_from_uart_to_simcom
+                0x080001e8       0x50 target/main.o
+                0x080001e8                Send_command_from_uart_to_simcom
+ .text.USART1_IRQHandler
+                0x08000238       0x38 target/main.o
+                0x08000238                USART1_IRQHandler
+ .text.USART2_IRQHandler
+                0x08000270       0x38 target/main.o
+                0x08000270                USART2_IRQHandler
+ .text.StartSocketService
+                0x080002a8       0x8c target/main.o
+                0x080002a8                StartSocketService
+ .text.SMS_search
+                0x08000334       0xe8 target/main.o
+                0x08000334                SMS_search
+ .text.Send_SMS
+                0x0800041c      0x104 target/main.o
+                0x0800041c                Send_SMS
+ .text.TCP_IP_Connect
+                0x08000520       0xb0 target/main.o
+                0x08000520                TCP_IP_Connect
+ .text.Send_TCP
+                0x080005d0       0xfc target/main.o
+                0x080005d0                Send_TCP
+ .text.VoiceCall
+                0x080006cc       0x44 target/main.o
+                0x080006cc                VoiceCall
+ .text.SIMCardSwitch
+                0x08000710       0x1c target/main.o
+                0x08000710                SIMCardSwitch
+ .text.Command_check
+                0x0800072c      0x334 target/main.o
+                0x0800072c                Command_check
+ .text.TIM2_IRQHandler
+                0x08000a60       0x98 target/main.o
+                0x08000a60                TIM2_IRQHandler
+ .text.startup.main
+                0x08000af8      0x27c target/main.o
+                0x08000af8                main
+ *(.rodata)
+ .rodata        0x08000d74        0x7 target/main.o
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x08000d7b        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x08000d7b        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x08000d7c                . = ALIGN (0x4)
+ *fill*         0x08000d7b        0x1 
+                0x08000d7c                _data_flash = .
+
+.vfp11_veneer   0x08000d7c        0x0
+ .vfp11_veneer  0x08000d7c        0x0 linker stubs
+
+.v4_bx          0x08000d7c        0x0
+ .v4_bx         0x08000d7c        0x0 linker stubs
+
+.iplt           0x08000d7c        0x0
+ .iplt          0x08000d7c        0x0 target/startup.o
+
+.rel.dyn        0x08000d7c        0x0
+ .rel.iplt      0x08000d7c        0x0 target/startup.o
+
+.data           0x20000000       0xdc load address 0x08000d7c
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _data_begin = .
+ *(.data)
+ *(.data*)
+ .data.SIMCardSwitchCommand
+                0x20000000        0xf target/main.o
+                0x20000000                SIMCardSwitchCommand
+ .data.SIMCardSwitchReference
+                0x2000000f        0x9 target/main.o
+                0x2000000f                SIMCardSwitchReference
+ .data.SMSCommandReference
+                0x20000018        0x3 target/main.o
+                0x20000018                SMSCommandReference
+ .data.SMSMessageFormatcommand
+                0x2000001b        0xa target/main.o
+                0x2000001b                SMSMessageFormatcommand
+ .data.TCPCommandReference
+                0x20000025        0x3 target/main.o
+                0x20000025                TCPCommandReference
+ .data.TCPConnectCommand
+                0x20000028       0x32 target/main.o
+                0x20000028                TCPConnectCommand
+ .data.addIPHeaderCommand
+                0x2000005a        0xd target/main.o
+                0x2000005a                addIPHeaderCommand
+ .data.callCommand
+                0x20000067       0x11 target/main.o
+                0x20000067                callCommand
+ .data.callCommandReference
+                0x20000078        0x4 target/main.o
+                0x20000078                callCommandReference
+ .data.modeToRetrieveDataCommand
+                0x2000007c        0xe target/main.o
+                0x2000007c                modeToRetrieveDataCommand
+ .data.newSMSReferenceResponse
+                0x2000008a        0x6 target/main.o
+                0x2000008a                newSMSReferenceResponse
+ .data.readSMSCommand
+                0x20000090        0xe target/main.o
+                0x20000090                readSMSCommand
+ .data.sendSMSCommand
+                0x2000009e       0x17 target/main.o
+                0x2000009e                sendSMSCommand
+ .data.sendTCPMessageCommand
+                0x200000b5        0xd target/main.o
+                0x200000b5                sendTCPMessageCommand
+ .data.showRemoteIPAddressAndPortCommand
+                0x200000c2        0xd target/main.o
+                0x200000c2                showRemoteIPAddressAndPortCommand
+ .data.startSocketServiceCommand
+                0x200000cf        0xb target/main.o
+                0x200000cf                startSocketServiceCommand
+                0x200000dc                . = ALIGN (0x4)
+ *fill*         0x200000da        0x2 
+                0x200000dc                _data_end = .
+
+.igot.plt       0x200000dc        0x0 load address 0x08000e58
+ .igot.plt      0x200000dc        0x0 target/startup.o
+
+.bss            0x200000dc      0x698 load address 0x08000e58
+                0x200000dc                . = ALIGN (0x4)
+                0x200000dc                _bss_begin = .
+                0x200000dc                _bss_start__ = _bss_begin
+ *(.bss)
+ *(.bss*)
+ .bss.Timer     0x200000dc        0x2 target/main.o
+                0x200000dc                Timer
+ .bss.a         0x200000de        0x1 target/main.o
+                0x200000de                a
+ .bss.b         0x200000df        0x1 target/main.o
+                0x200000df                b
+ .bss.commandIndex
+                0x200000e0        0x1 target/main.o
+                0x200000e0                commandIndex
+ .bss.commandProcessing
+                0x200000e1        0x1 target/main.o
+                0x200000e1                commandProcessing
+ .bss.i         0x200000e2        0x1 target/main.o
+                0x200000e2                i
+ *fill*         0x200000e3        0x1 
+ .bss.n.4551    0x200000e4        0x4 target/main.o
+ .bss.responseIndex
+                0x200000e8        0x1 target/main.o
+                0x200000e8                responseIndex
+ .bss.sendDelay
+                0x200000e9        0x1 target/main.o
+                0x200000e9                sendDelay
+ .bss.sendSMSCommandResponseDelay
+                0x200000ea        0x1 target/main.o
+                0x200000ea                sendSMSCommandResponseDelay
+ .bss.sendTCPCommandResponseDelay
+                0x200000eb        0x1 target/main.o
+                0x200000eb                sendTCPCommandResponseDelay
+ .bss.x         0x200000ec        0x1 target/main.o
+                0x200000ec                x
+ .bss.y         0x200000ed        0x1 target/main.o
+                0x200000ed                y
+ *(COMMON)
+ COMMON         0x200000ee      0x686 target/main.o
+                0x200000ee                commandBuffer
+                0x200002e2                message
+                0x2000038c                responseBuffer
+                0x20000774                . = ALIGN (0x4)
+                0x20000774                _bss_end = .
+                0x20000774                __bss_end__ = _bss_end
+                0x000000c8                _stack_size = 0xc8
+                0x20002800                _stack_end = 0x20002800
+                0x20002738                _stack_begin = (_stack_end - _stack_size)
+                0x20002738                . = _stack_begin
+
+._stack         0x20000774       0xc8 load address 0x080014f0
+                0x2000083c                . = (. + _stack_size)
+ *fill*         0x20000774       0xc8 
+OUTPUT(target/target.elf elf32-littlearm)
+
+.debug_info     0x00000000     0x161c
+ .debug_info    0x00000000      0x120 target/startup.o
+ .debug_info    0x00000120     0x14fc target/main.o
+
+.debug_abbrev   0x00000000      0x42c
+ .debug_abbrev  0x00000000       0xda target/startup.o
+ .debug_abbrev  0x000000da      0x352 target/main.o
+
+.debug_loc      0x00000000      0x81f
+ .debug_loc     0x00000000       0x43 target/startup.o
+ .debug_loc     0x00000043      0x7dc target/main.o
+
+.debug_aranges  0x00000000       0xb8
+ .debug_aranges
+                0x00000000       0x28 target/startup.o
+ .debug_aranges
+                0x00000028       0x90 target/main.o
+
+.debug_ranges   0x00000000      0x130
+ .debug_ranges  0x00000000       0x18 target/startup.o
+ .debug_ranges  0x00000018      0x118 target/main.o
+
+.debug_line     0x00000000      0x662
+ .debug_line    0x00000000       0x66 target/startup.o
+ .debug_line    0x00000066      0x5fc target/main.o
+
+.debug_str      0x00000000      0xa96
+ .debug_str     0x00000000      0x1b2 target/startup.o
+                                0x1c4 (size before relaxing)
+ .debug_str     0x000001b2      0x8e4 target/main.o
+                                0xa71 (size before relaxing)
+
+.comment        0x00000000       0x7f
+ .comment       0x00000000       0x7f target/startup.o
+                                 0x80 (size before relaxing)
+ .comment       0x0000007f       0x80 target/main.o
+
+.ARM.attributes
+                0x00000000       0x33
+ .ARM.attributes
+                0x00000000       0x33 target/startup.o
+ .ARM.attributes
+                0x00000033       0x33 target/main.o
+
+.debug_frame    0x00000000      0x1ec
+ .debug_frame   0x00000000       0x30 target/startup.o
+ .debug_frame   0x00000030      0x1bc target/main.o
